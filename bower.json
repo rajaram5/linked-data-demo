@@ -1,0 +1,23 @@
+{
+  "name": "linked-data-demo",
+  "description": "Demonstrator for FAIR datapoints",
+  "main": "index.js",
+  "license": "MIT",
+  "keywords": [
+    "FAIR"
+  ],
+  "homepage": "https://github.com/DTL-FAIRData/linked-data-demo",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-route": "^1.5.7",
+    "bootstrap": "^3.3.6"
+  }
+}
