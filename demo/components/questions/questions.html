@@ -1,10 +1,10 @@
 <div>
-	<select size="5"
-		ng-model="selectedQuestion"
-		ng-change="questionChanged()"
-		ng-options="key as option.name for (key, option) in questions">
-		
-		<!-- workaround for angular's empty model selection -->
-		<option value="" ng-if="false"></option>
-	</select>
+    <select size="5"
+        ng-model="selectedQuestion"
+        ng-change="questionChanged()"
+        ng-options="key as option.name for (key, option) in questions">
+        
+        <!-- workaround for angular's empty model selection -->
+        <option value="" ng-if="false"></option>
+    </select>
 </div>

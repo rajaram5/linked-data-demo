@@ -6,6 +6,7 @@ gulp.task('vendor', function() {
   var js = gulp.src('bower.json')
     .pipe(plugins.mainBowerFiles())
     .pipe(plugins.filter('**/*.js'))
+    .pipe(plugins.using())
     .pipe(plugins.concat('vendor.js'))
     .pipe(gulp.dest('build'));
   

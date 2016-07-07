@@ -21,10 +21,10 @@
     "bootstrap": "^3.3.6"
   },
   "overrides": {
-  	"angular": {
-	  "dependencies": {
-	  	"jquery": "*"
-	  }
-	}
+    "angular": {
+      "dependencies": {
+        "jquery": "*"
+      }
+    }
   }
 }

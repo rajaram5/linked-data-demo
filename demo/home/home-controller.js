@@ -11,8 +11,15 @@ app.controller('HomeCtrl', function($scope) {
   
   $scope.variables = [];
   
+  $scope.varoptions = [
+    {value: 1, name: 'First option'},
+    {value: 2, name: 'Second option'},
+    {value: 3, name: 'Option #3'},
+    {value: 4, name: 'Number four option'}
+  ];
+  
   $scope.process = function() {
-    console.log('process', $scope.variables);
+    console.log('process', 'sparql query here');
     $scope.results = [];
   };
 });
