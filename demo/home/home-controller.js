@@ -1,16 +1,18 @@
 app.controller('HomeCtrl', function($scope) {
   $scope.selectedQuestion = null;
-  $scope.questions = [
-    {value: 1, name: 'The first question'},
-    {value: 2, name: 'Question #2'}
-  ];
+  $scope.questions = {
+    1: {name: 'The first question', variables: ['phenotype']},
+    2: {name: 'Question #2', variables: ['phenotype', 'disease']}
+  };
   
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
   };
   
+  $scope.variables = [];
+  
   $scope.process = function() {
-    console.log('processing query');
+    console.log('process', $scope.variables);
     $scope.results = [];
   };
 });

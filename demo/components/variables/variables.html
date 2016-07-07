@@ -1,4 +1,15 @@
-<div>
-	<input type="text" placeholder="Type your thing here">
-	<button type="submit" ng-click="process()">Process</button>
+<div ng-repeat="variable in questions[selectedQuestion].variables">
+	<label>
+		<span>{{variable}}</span>
+		<input type="text" list="mylist" ng-model="variables[variable]" placeholder="Type your {{variable}} here">
+	</label>
+	<datalist id="mylist">
+		<option value="first">First option</option>
+		<option value="second">Option number two</option>
+		<option value="third">The third option</option>
+		<option value="fourth"></option>
+	</datalist>
+	
 </div>
+
+<button type="submit" ng-click="process()">Process</button>
