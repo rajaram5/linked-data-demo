@@ -1,6 +1,7 @@
 <div>
-	<select size="5">
-		<option value="1" ng-click="questionChanged(1)">The first question</option>
-		<option value="2" ng-click="questionChanged(2)">Second question</option>
+	<select size="5" ng-model="selectedQuestion" ng-change="questionChanged()"
+		ng-options="option.value as option.name for option in questions">
+		<!-- workaround for angular's empty model selection -->
+		<option value="" ng-if="false"></option>
 	</select>
 </div>
