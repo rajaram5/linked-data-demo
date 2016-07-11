@@ -1,4 +1,4 @@
-app.controller('HomeCtrl', function($scope) {
+app.controller('HomeCtrl', function($scope, Data) {
   $scope.selectedQuestion = null;
   $scope.questions = {
     1: {name: 'The first question', variables: ['phenotype']},
@@ -20,6 +20,47 @@ app.controller('HomeCtrl', function($scope) {
   
   $scope.process = function() {
     console.log('process', 'sparql query here');
-    $scope.results = [];
+    
+    Data.query(1, ['var1', 'var2']).then(function(results) {
+      $scope.results = results;
+    }, function(response) {
+      console.log('could not answer question due to an error', response);
+    });
+  };
+  
+  $scope.getHeaders = function(vars) {
+    var headers = [];
+    vars.forEach(function(v) {
+      if (v.indexOf('URI') === -1) {
+        headers.push(v);
+      }
+    });
+    return headers;
+  };
+  
+  $scope.getValues = function(results, vars) {
+    var rows = [];
+    results.forEach(function(result){
+      var values = [];
+      vars.forEach(function(v) {
+        if (v.indexOf('URI') === -1 && result[v] !== undefined) {
+          var resource = result[v + 'URI'];
+          var displayName = result[v];
+          
+          if (resource !== undefined) {
+            values.push({
+              uri: resource,
+              label: displayName
+            });
+          } else {
+            values.push({
+              label: displayName
+            });
+          }
+        }
+      });
+      rows.push(values);
+    });
+    return rows;
   };
 });

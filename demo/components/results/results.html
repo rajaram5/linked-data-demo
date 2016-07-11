@@ -1,7 +1,17 @@
 <table>
     <thead>
         <tr>
-            <th>#</th>
+            <th ng-repeat="var in getHeaders(results.head.vars)">
+                {{var}}
+            </th>
         </tr>
     </thead>
+    <tbody ng-init="rows = getValues(results.results.bindings, results.head.vars)">
+        <tr ng-repeat="result in rows">
+            <td ng-repeat="value in result track by $index">
+                <a ng-if="value.uri" ng-href="{{value.uri.value}}">{{value.label.value}}</a>
+                <span ng-if="!value.uri">{{value.label.value}}</span>
+            </td>
+        </tr>
+    </tbody>
 </table>
