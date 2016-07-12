@@ -10,7 +10,7 @@ app.service('Data', function($http, $q) {
   '\n' +
   '  SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI  {\n' +
   '        \n' +
-  '   VALUES(?phenotypeInput) {(<http://purl.obolibrary.org/obo/HP_0000463>)}\n' +   
+  '   VALUES(?phenotypeInput) {(<#phenotype#>)}\n' +   
   '    {\n' +
   '      ?phenotypeURI  rdfs:subClassOf* ?phenotypeInput.\n' +
   '    } \n' +
@@ -30,17 +30,61 @@ app.service('Data', function($http, $q) {
   '    }\n' +
   '  }  group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI';
   
+  var v = 'PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n' +
+    'PREFIX hpo: <http://purl.obolibrary.org/obo/>\n' +
+    '\n' +
+    'SELECT DISTINCT ?url ?value {\n' + 
+    '\n' +
+    '    VALUES ?url {hpo:HP_0000154 hpo:HP_0002072 hpo:HP_0000470 hpo:HP_0001250 hpo:HP_0000316\n' + 
+    'hpo:HP_0000463 hpo:HP_0000152 hpo:HP_0000271 \n' +
+    '                    hpo:HP_0000118\n' +
+    '                }  \n' +
+    '    {\n' +
+    '        ?url rdfs:label ?value.\n' +
+    '    }\n' +
+    '}';
+  
   return {
-    query: function(question, variables) {
+    variables: function(variable) {
       var deferred = $q.defer();
       
       $http.jsonp(endpoint, {
         params: {
-          query: q,
+          query: v,
+          format: 'json',
+          callback: 'JSON_CALLBACK'
+        }
+      }).then(function(response) {
+        var variables = [];
+        response.data.results.bindings.forEach(function(binding) {
+          variables.push({
+            uri: binding.url.value,
+            label: binding.value.value
+          });
+        });
+        deferred.resolve(variables);
+      }, function(response) {
+        deferred.reject(response);
+      });
+      
+      return deferred.promise;
+    },
+    query: function(question, variables) {
+      var deferred = $q.defer();
+      
+      var myquery = q;
+      
+      for (var key in variables) {
+        var value = variables[key];
+        myquery = myquery.replace('#'+key+'#', value);
+      };
+      
+      $http.jsonp(endpoint, {
+        params: {
+          query: myquery,
           format: 'json',
           callback: 'JSON_CALLBACK' // as per https://docs.angularjs.org/api/ng/service/$http#jsonp
-        },
-        responseType: 'text'
+        }
       }).then(function(response) {
         console.log('succes, response', response.data);
         deferred.resolve(response.data);
