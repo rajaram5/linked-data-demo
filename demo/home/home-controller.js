@@ -2,8 +2,8 @@ app.controller('HomeCtrl', function($scope, Data, TemplateQueries) {
   $scope.selectedQuestion = null;
   $scope.questions = null;
   TemplateQueries.questions().then(
-		  function(result) {$scope.questions = result}		  
-  );   
+		  function(result) {$scope.questions = result;}		  
+  ); 
   // preload the autocomplete values
   $scope.vars = {};
   angular.forEach($scope.questions, function(question, key) {
