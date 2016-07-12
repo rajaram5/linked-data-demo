@@ -1,10 +1,10 @@
-app.controller('HomeCtrl', function($scope, Data) {
+app.controller('HomeCtrl', function($scope, $http, Data, TemplateQueries) {
+  var self = $scope;
   $scope.selectedQuestion = null;
-  $scope.questions = {
-    1: {name: 'The first question', variables: ['phenotype']},
-    2: {name: 'Question #2', variables: ['phenotype', 'disease']}
-  };
-  
+  $scope.questions = null;
+  TemplateQueries.questions().then(
+		  function(result) {$scope.questions = result}
+		  );    
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
   };
