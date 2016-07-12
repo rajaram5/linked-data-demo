@@ -1,0 +1,61 @@
+[
+   {
+		"text" : "Get number of biosamples from donors with a specific phenotype", 
+                "variables" : ["phenotype"], 
+                "query " : "template1"
+		
+            },
+         {
+		"text" : "Get number of persons with a specific phenotype", 
+                "variables" : ["phenotype"], 
+                "query " : "template7"
+		
+            },    
+	 {
+		"text" : "Get number of biosamples from donors with a specific disease", 
+                "variables" : ["disease"], 
+                "query " : "template2"
+		
+            },
+         {
+		"text" : "Get number of biosamples from donors with a specific phenotype and from a specific region", 
+                "variables" : ["phenotype", "region"], 
+                "query " : "template3"
+		
+            },    
+        
+         {
+		"text" : "Get biosamples from donors with a specific phenotype and specific sampletypes", 
+                "variables" : ["phenotype", "sampleType"], 
+                "query " : "template9"
+		
+            },    
+	 {
+		"text" : "Get biosamples from donors with a specific disease and a specific karyotype", 
+                "variables" : ["disease", "karyotype"], 
+                "query " : "template4"
+            }, 
+	 {
+                "text" : "Get biosamples from donors with a specific disease, a specific karyotype and specific sampletypes", 
+                "variables" : ["disease", "sampleType", "karyotype"], 
+                "query " : "template5"
+            },
+	{
+                "text" : "Get biosamples from donors with a specific disease, a specific karyotype, a specific breakpoint localization and a specific sampletype", 
+                "variables" : ["disease", "sampleType", "karyotype", "breakpoint"], 
+                "query " : "template6"
+	},
+         {
+		"text" : "Get diseases sharing phenotypes", 
+                "variables" : ["disease"], 
+                "query " : "template8"
+		
+            },
+         {
+		"text" : "Get biosamples from donors sharing phenotypes", 
+                "variables" : ["disease"], 
+                "query " : "template10"
+		
+            }    
+
+]

@@ -1,10 +1,11 @@
-<div>
-    <select ng-attr-size="{{questions.length}}"
-        ng-model="selectedQuestion"
+<div class="panel-body">
+	<select ng-attr-size="{{questions.length}}"
+     	ng-model="selectedQuestion"
         ng-change="questionChanged()"
-        ng-options="key as option.text for (key, option) in questions">
-        
-        <!-- workaround for angular's empty model selection -->
-        <option value="" ng-if="false"></option>
+        ng-options="key as option.text for (key, option) in questions"
+        class="form-control" 
+        id="template">        
+        	<!-- workaround for angular's empty model selection -->
+        	<option value="" ng-if="false"></option>
     </select>
 </div>

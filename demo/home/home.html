@@ -1,7 +1,27 @@
-<h1>FAIR data demonstrator</h1>
-
-<questions></questions>
-
-<variables ng-if="selectedQuestion"></variables>
-
-<results ng-if="results"></results>
+<!-- Page Content -->
+<div class="container">
+	<div class="row">
+    	<div class="col-lg-12">
+        	<div class="page-header text-center">
+              <h1>FAIR Data Demonstrator</h1>
+            </div>
+			<div class="panel panel-info" id="step1">
+				<div class="panel-heading">
+			    	<h3 class="panel-title">Step 1 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Select query:</h3>
+			    </div>
+				<questions></questions>
+			</div>
+			 <div class="panel panel-info" id="step2">
+             	<div class="panel-heading">
+                	<h3 class="panel-title">Step 2 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> By which value?</h3>
+              	</div>
+              	<div class="panel-body"> 
+              		<variables ng-if="selectedQuestion"></variables>
+              	</div>              	
+             </div>
+							
+			<results ng-if="results"></results>
+		</div>
+	</div>
+</div>
+<!-- /.container -->
