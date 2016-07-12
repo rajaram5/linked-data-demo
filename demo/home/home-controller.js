@@ -5,8 +5,23 @@ app.controller('HomeCtrl', function($scope, Data) {
     2: {name: 'Question #2', variables: ['phenotype', 'disease']}
   };
   
+  // preload the autocomplete values
+  $scope.vars = {};
+  angular.forEach($scope.questions, function(question, key) {
+    angular.forEach(question.variables, function(variable) {
+      if ($scope.vars[variable]) {
+        return;
+      }
+      
+      Data.variables(variable).then(function(vars) {
+        $scope.vars[variable] = vars;
+      });
+    });
+  });
+  
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
+    console.log('preloaded variables:', $scope.vars);
   };
   
   $scope.variables = [];
@@ -21,8 +36,10 @@ app.controller('HomeCtrl', function($scope, Data) {
   $scope.process = function() {
     console.log('process', 'sparql query here');
     
-    Data.query(1, ['var1', 'var2']).then(function(results) {
+    Data.query($scope.selectedQuestion, $scope.variables).then(function(results) {
+      console.log('got results', results);
       $scope.results = results;
+      $scope.rows = $scope.getValues(results.results.bindings, results.head.vars);
     }, function(response) {
       console.log('could not answer question due to an error', response);
     });
@@ -45,11 +62,11 @@ app.controller('HomeCtrl', function($scope, Data) {
       vars.forEach(function(v) {
         if (v.indexOf('URI') === -1 && result[v] !== undefined) {
           var resource = result[v + 'URI'];
-          var displayName = result[v];
+          var displayName = result[v].value;
           
           if (resource !== undefined) {
             values.push({
-              uri: resource,
+              uri: resource.value,
               label: displayName
             });
           } else {
