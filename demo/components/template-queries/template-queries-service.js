@@ -5,8 +5,9 @@ app.service('TemplateQueries', function($http, $q) {
 		questions : function () {
 			
 			$http.get('data/questions.json').then(function(response) { 
-				deferred.resolve(response.data);		      	  
-				console.log('List of questions', response.data);		        
+				deferred.resolve(response.data);	
+				console.log('Number of questions', response.data.length);
+				console.log('Questions ', response.data);
 			}), 
 			function error(response) {
 	          console.log('Fail to load template questions', response.data);
