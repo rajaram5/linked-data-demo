@@ -18,10 +18,16 @@
   "dependencies": {
     "angular": "^1.5.7",
     "angular-route": "^1.5.7",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "rdfstore": "^0.9.15"
   },
   "overrides": {
     "angular": {
+      "dependencies": {
+        "jquery": "*"
+      }
+    },
+    "rdfstore": {
       "dependencies": {
         "jquery": "*"
       }
