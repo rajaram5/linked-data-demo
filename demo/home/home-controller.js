@@ -1,8 +1,12 @@
 app.controller('HomeCtrl', function($scope, Data, TemplateQueries) {
   $scope.selectedQuestion = null;
   $scope.questions = null;
+  $scope.variables = null;
   TemplateQueries.questions().then(
-		  function(result) {$scope.questions = result;}		  
+		  function(result) {
+			  $scope.questions = result.templateQueries;
+			  $scope.variables = result.variables;
+			  }		  
   ); 
   // preload the autocomplete values
   $scope.vars = {};
@@ -21,9 +25,8 @@ app.controller('HomeCtrl', function($scope, Data, TemplateQueries) {
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
     console.log('preloaded variables:', $scope.vars);
-  };
+  };  
   
-  $scope.variables = [];
   
   $scope.varoptions = [
     {value: 1, name: 'First option'},
