@@ -45,6 +45,25 @@ gulp.task('html', ['vendor', 'js', 'css'], function() {
     .pipe(plugins.connect.reload());
 });
 
+gulp.task('resources', function() {
+  var stream = merge();
+  
+  var fonts = gulp.src('bower_components/bootstrap/dist/fonts/**')
+    .pipe(plugins.using())
+    .pipe(gulp.dest('build/fonts'));
+  stream.add(fonts);
+  
+  var data = gulp.src('demo/data/questions.json')
+    .pipe(gulp.dest('build/data'));
+  stream.add(data);
+  
+  var images = gulp.src('demo/images/**')
+    .pipe(gulp.dest('build/images'));
+  stream.add(images);
+  
+  return stream;
+});
+
 gulp.task('connect', function() {
   return plugins.connect.server({
     root: 'build',
@@ -60,6 +79,6 @@ gulp.task('watch', function() {
   gulp.watch('demo/index.html', ['html']);
 });
 
-gulp.task('dist', ['vendor', 'js', 'css', 'html']);
+gulp.task('dist', ['vendor', 'js', 'css', 'html', 'resources']);
 
 gulp.task('default', ['dist', 'connect', 'watch']);
