@@ -1,49 +1,55 @@
-app.controller('HomeCtrl', function($scope, Data, TemplateQueries) {
+app.controller('HomeCtrl', function($scope, Data, TemplateQueries, $timeout, $http, Cache) {
   $scope.selectedQuestion = null;
-  $scope.questions = null;
-  $scope.variables = null;
-  TemplateQueries.questions().then(
-		  function(result) {
-			  $scope.questions = result.templateQueries;
-			  $scope.variables = result.variables;
-			  }		  
-  ); 
-  // preload the autocomplete values
-  $scope.vars = {};
-  angular.forEach($scope.questions, function(question, key) {
-    angular.forEach(question.variables, function(variable) {
-      if ($scope.vars[variable]) {
-        return;
-      }
-      
-      Data.variables(variable).then(function(vars) {
-        $scope.vars[variable] = vars;
+  $scope.variables = {};
+  
+  TemplateQueries.questions().then(function(result) {
+	  $scope.questions = result.templateQueries;
+  });
+
+  $timeout(function() {
+    // preload the autocomplete values
+    $scope.vars = {};
+    angular.forEach($scope.questions, function(question, key) {
+      angular.forEach(question.variables, function(variable) {
+        if ($scope.vars[variable]) {
+          return;
+        }
+        
+        var promise = Data.variables(variable);
+        $scope.vars[variable] = promise;
+        promise.then(function(vars) {
+          $scope.vars[variable] = vars;
+        });
       });
     });
-  });
+  }, 20000);
   
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
     console.log('preloaded variables:', $scope.vars);
   };  
   
-  
-  $scope.varoptions = [
-    {value: 1, name: 'First option'},
-    {value: 2, name: 'Second option'},
-    {value: 3, name: 'Option #3'},
-    {value: 4, name: 'Number four option'}
-  ];
-  
   $scope.process = function() {
-    console.log('process', 'sparql query here');
-    
-    Data.query($scope.selectedQuestion, $scope.variables).then(function(results) {
-      console.log('got results', results);
-      $scope.results = results;
-      $scope.rows = $scope.getValues(results.results.bindings, results.head.vars);
-    }, function(response) {
-      console.log('could not answer question due to an error', response);
+    TemplateQueries.questions().then(function(questions) {
+      console.log('questions', questions.templateQueries);
+      console.log('selected question index', $scope.selectedQuestion);
+      var question = questions.templateQueries[$scope.selectedQuestion];
+      console.log('selected question', question);
+      console.log('chosen variables', $scope.variables);
+      
+      $http.get('data/query/' + question.queryFileName).then(function(response) {
+        var query = response.data;
+        
+        question.variables.forEach(function(v) {
+          query = query.replace('#'+v+'#', $scope.variables[v]);
+        });
+        
+        Cache.query(query).then(function(results) {
+          console.log('cache query results', results);
+        }, function(response) {
+          console.log('cache query error', response);
+        });
+      });
     });
   };
   

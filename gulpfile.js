@@ -40,7 +40,7 @@ gulp.task('css', function() {
 
 gulp.task('html', ['vendor', 'js', 'css'], function() {
   return gulp.src('demo/index.html')
-    .pipe(plugins.inject(gulp.src(['build/vendor.@(css|js)', 'build/demo.@(css|js)'], {read: false}), {addRootSlash: false, ignorePath: 'build'}))
+    .pipe(plugins.inject(gulp.src(['build/vendor.*', 'build/demo.*'], {read: false}), {addRootSlash: false, ignorePath: 'build'}))
     .pipe(gulp.dest('build'))
     .pipe(plugins.connect.reload());
 });
@@ -61,7 +61,12 @@ gulp.task('resources', function() {
     .pipe(gulp.dest('build/images'));
   stream.add(images);
   
-  return stream;
+  var queries = gulp.src('sparqlQueries/*.sparql')
+    .pipe(gulp.dest('build/data/query'));
+  stream.add(queries);
+  
+  return stream
+    .pipe(plugins.connect.reload());
 });
 
 gulp.task('connect', function() {
@@ -77,6 +82,7 @@ gulp.task('watch', function() {
   gulp.watch('demo/**/*.html', ['js']);
   gulp.watch('demo/**/*.css', ['css']);
   gulp.watch('demo/index.html', ['html']);
+  gulp.watch('sparqlQueries/**', ['resources']);
 });
 
 gulp.task('dist', ['vendor', 'js', 'css', 'html', 'resources']);

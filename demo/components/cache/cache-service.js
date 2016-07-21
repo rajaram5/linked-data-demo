@@ -1,6 +1,11 @@
 app.service('Cache', function($q) {
   var dummyFiles = ['http://semlab1.liacs.nl:8080/rdc-demo-dataset/RING_14_dummy-Biobank.ttl',
-    'http://semlab1.liacs.nl:8080/rdc-demo-dataset/RING_14_dummy-Person.ttl'];
+    'http://semlab1.liacs.nl:8080/rdc-demo-dataset/RING_14_dummy-Person.ttl',
+    'http://semlab1.liacs.nl:8080/rdc-demo-dataset/hpo_subset_2016_07_19.ttl',
+    'http://semlab1.liacs.nl:8080/rdc-demo-dataset/orphadata2.0_subset_2016_07_19.ttl',
+//    'http://semlab1.liacs.nl:8080/rdc-demo-dataset/rdc-ontology.ttl',
+//    'http://semlab1.liacs.nl:8080/rdc-demo-dataset/regions.ttl'
+    ];
   
   var cachestore = undefined;
   
@@ -30,17 +35,29 @@ app.service('Cache', function($q) {
       
       var resource = resources.shift();
       
-      cachestore.execute('LOAD <' + resource + '> INTO GRAPH <demo>', function(error) {
-        if (error) {
-          console.log('could not load file', resource, error);
-        } else {
-          console.log('loaded', resource);
-        }
+      cachestore.load('remote', resource, function(error, num) {
+        console.log('load succes', resource, error, num);
         if (resources.length > 0) {
-          console.log('continuing with the rest of the resources');
           self.load(resources);
+        } else {
+          cachestore.registeredGraphs(function(graphs) {
+            console.log('registed graphs', graphs);
+          });
         }
       });
+    },
+    query: function(q) {
+      var deferred = $q.defer();
+      console.log(q);
+      cachestore.execute(q, function(error, results) {
+        console.log(error, results);
+        if (error) {
+          deferred.reject(error);
+        } else {
+          deferred.resolve(results);
+        }
+      });
+      return deferred.promise;
     }
   };
 });

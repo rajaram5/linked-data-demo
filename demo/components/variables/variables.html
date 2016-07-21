@@ -3,8 +3,8 @@
 		<div class="col-md-4"><button type="button" class="btn btn-voilet btn-lg btn-block">{{variable}}</button></div>
 	    <div class="col-md-4"><button type="button" class="btn btn-default btn-lg btn-block"><i>type</i></button></div>  
 	    <div class="col-md-4">
-	        <input class="form-control" type="text" list="mylist" ng-model="variables[variable]" placeholder="Type your {{variable}} here">
-	        <datalist id="mylist">
+	        <input class="form-control" type="text" ng-attr-list="{{variable}}-list" ng-model="variables[variable]" placeholder="Type your {{variable}} here">
+	        <datalist ng-attr-id="{{variable}}-list">
 	    	    <option ng-repeat="option in vars[variable]" ng-value="option.uri">{{option.label}}</option>
 	    	</datalist> 
 	    </div>

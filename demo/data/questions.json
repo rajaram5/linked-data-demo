@@ -5,21 +5,21 @@
       "variables": [
         "phenotype"
       ],
-      "queryFileName ": "template1.sparql"
+      "queryFileName": "template1.sparql"
     },
     {
       "text": "Get number of persons with a specific phenotype",
       "variables": [
         "phenotype"
       ],
-      "queryFileName ": "template7.sparql"
+      "queryFileName": "template7.sparql"
     },
     {
       "text": "Get number of biosamples from donors with a specific disease",
       "variables": [
         "disease"
       ],
-      "query ": "template2.sparql"
+      "queryFileName": "template2.sparql"
     },
     {
       "text": "Get number of biosamples from donors with a specific phenotype and from a specific region",
@@ -27,7 +27,7 @@
         "phenotype",
         "region"
       ],
-      "queryFileName ": "template3.sparql"
+      "queryFileName": "template3.sparql"
     },
     {
       "text": "Get biosamples from donors with a specific phenotype and specific sampletypes",
@@ -35,7 +35,7 @@
         "phenotype",
         "sampleType"
       ],
-      "query ": "template9.sparql"
+      "queryFileName": "template9.sparql"
     },
     {
       "text": "Get biosamples from donors with a specific disease and a specific karyotype",
@@ -43,7 +43,7 @@
         "disease",
         "karyotype"
       ],
-      "queryFileName ": "template4.sparql"
+      "queryFileName": "template4.sparql"
     },
     {
       "text": "Get biosamples from donors with a specific disease, a specific karyotype and specific sampletypes",
@@ -52,7 +52,7 @@
         "sampleType",
         "karyotype"
       ],
-      "queryFileName ": "template5.sparql"
+      "queryFileName": "template5.sparql"
     },
     {
       "text": "Get biosamples from donors with a specific disease, a specific karyotype, a specific breakpoint localization and a specific sampletype",
@@ -76,39 +76,27 @@
       "variables": [
         "disease"
       ],
-      "queryFileName ": "template10.sparql"
+      "queryFileName": "template10.sparql"
     }
   ],
-  "variables": [
-    {
-      "disease": {
-        "queryFileName": "getDiseases.sparql"
-      }
+  "variables": {
+    "disease": {
+      "queryFileName": "getDiseases.sparql"
     },
-    {
-      "sampleType": {
-        "queryFileName": "getSampleTypes.sparql"
-      }
+    "sampleType": {
+      "queryFileName": "getSampleTypes.sparql"
     },
-    {
-      "karyotype": {
-        "queryFileName": "getKaryotypes.sparql"
-      }
+    "karyotype": {
+      "queryFileName": "getKaryotypes.sparql"
     },
-    {
-      "breakpoint": {
-        "queryFileName": "getBreakpoints.sparql"
-      }
+    "breakpoint": {
+      "queryFileName": "getBreakpoints.sparql"
     },
-    {
-      "phenotype": {
-        "queryFileName": "getPhenotypes.sparql"
-      }
+    "phenotype": {
+      "queryFileName": "getPhenotypes.sparql"
     },
-    {
-      "region": {
-        "queryFileName": "getRegions.sparql"
-      }
+    "region": {
+      "queryFileName": "getRegions.sparql"
     }
-  ]
+  }
 }
