@@ -1,4 +1,6 @@
-app.controller('HomeCtrl', function($scope, Data, TemplateQueries, $timeout, $http, Cache) {
+app.controller('HomeCtrl', function($scope, Data, TemplateQueries, $timeout, $http, Cache, FDP) {
+  FDP.load('http://semlab1.liacs.nl:8080/fdp');
+  
   $scope.selectedQuestion = null;
   $scope.variables = {};
   
