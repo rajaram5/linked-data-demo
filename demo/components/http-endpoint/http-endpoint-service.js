@@ -1,6 +1,9 @@
 app.service('HttpEndpoint', function($q, $http, $timeout) {
-  var endpoint = 'http://triplestore.fair-dtls.vm.surfsara.nl:8890/sparql';
-  var fooEndpoint = 'http://triplestore.fair-dtls.vm.surfsara.nl:8890/DAV/home/demo/';
+  var endpointBaseUrl = 'http://localhost:8891/';
+  var endpoint = endpointBaseUrl + 'sparql';
+  var fooEndpoint = endpointBaseUrl + 'DAV/home/demo/';
+  var username = 'dba';
+  var password = 'dba';
   
   return {
     /**
@@ -38,6 +41,7 @@ app.service('HttpEndpoint', function($q, $http, $timeout) {
           $http.put(fooEndpoint + name, response.data, {
             headers: {
               'Content-Type': contentType,
+              //'Authorization': 'Basic '+ base64.encode(username + ':' + password)
               Authorization: 'Basic ZGJhOmRiYQ=='
             }
           }).then(function(res) {

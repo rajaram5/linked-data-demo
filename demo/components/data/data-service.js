@@ -19,10 +19,21 @@ app.service('Data', function($http, $q, Cache) {
           }).then(function(response) {
             var variables = [];
             response.data.results.bindings.forEach(function(binding) {
-              variables.push({
-                uri: binding.url.value,
-                label: binding.value.value
-              });
+            	var url;
+            	var label;
+            	if ('url' in binding && 'value' in binding) {
+            		url = binding.url.value;
+            		label= binding.value.value;
+            	}
+            	else if ('url' in binding){
+            		url = binding.url.value;
+            		label= binding.url.value;
+            	}
+            	else if ('value' in binding) {
+            	url = binding.value.value;
+        		label= binding.value.value; 
+            	}
+            	variables.push({uri: url, label: label});
             });
             deferred.resolve(variables);
           }, function(response) {

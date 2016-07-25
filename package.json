@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/DTL-FAIRData/linked-data-demo#readme",
   "devDependencies": {
+    "angular-utf8-base64": "0.0.2",
     "gulp": "^3.9.1",
     "gulp-angular-templatecache": "^2.0.0",
     "gulp-concat": "^2.6.0",
