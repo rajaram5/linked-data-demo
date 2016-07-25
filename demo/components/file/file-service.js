@@ -1,8 +1,8 @@
-app.service('QueryFile', function($q, $http) {
+app.service('File', function($q, $http) {
   return { 
     read: function(fileName) {
       var deferred = $q.defer();
-      $http.get('data/query/' + fileName).then(function(response) {
+      $http.get(fileName).then(function(response) {
         var query = response.data;
 //        console.log("Query :" + query);
         deferred.resolve(query);

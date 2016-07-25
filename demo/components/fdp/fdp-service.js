@@ -1,4 +1,4 @@
-app.service('FDP', function($http, HttpEndpoint, QueryFile, $q) {
+app.service('FDP', function($http, HttpEndpoint, File, $q) {
   return {
     load: function(root) {
       
@@ -6,7 +6,7 @@ app.service('FDP', function($http, HttpEndpoint, QueryFile, $q) {
         var deferred = $q.defer();
         
         HttpEndpoint.load(url).then(function() {
-          QueryFile.read(nextQueryFile).then(function(response) {
+          File.read(nextQueryFile).then(function(response) {
             HttpEndpoint.query(response, {
               '#inputUrl#': url
             }).then(function(res) {
@@ -26,20 +26,20 @@ app.service('FDP', function($http, HttpEndpoint, QueryFile, $q) {
         return deferred.promise;
       };
       
-      foo(root, 'getCatalogs.sparql').then(function(catalogs) {
+      foo(root, 'data/query/getCatalogs.sparql').then(function(catalogs) {
         Object.keys(catalogs).forEach(function(cid) {
           var catalog = catalogs[cid];
-          foo(catalog, 'getDataset.sparql').then(function(datasets) {
+          foo(catalog, 'data/query/getDataset.sparql').then(function(datasets) {
             Object.keys(datasets).forEach(function(did) {
               var dataset = datasets[did];
-              foo(dataset, 'getDistributions.sparql').then(function(distributions) {
+              foo(dataset, 'data/query/getDistributions.sparql').then(function(distributions) {
                 // done?
               });
             });
           });
         });
       });
-      QueryFile.read('getTurtleDistributionFiles.sparql').then(function(query) {
+      File.read('data/query/getTurtleDistributionFiles.sparql').then(function(query) {
         HttpEndpoint.query(query).then(function(response) {
           console.log('all ttl dist?');
           response.data.results.bindings.forEach(function(binding) {

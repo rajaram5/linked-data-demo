@@ -1,12 +1,16 @@
-app.controller('HomeCtrl', function($scope, Data, TemplateQueries, $timeout, $http, Cache, FDP) {
+app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, FDP) {
   FDP.load('http://semlab1.liacs.nl:8080/fdp');
   
   $scope.selectedQuestion = null;
   $scope.variables = {};
   
-  TemplateQueries.questions().then(function(result) {
-	  $scope.questions = result.templateQueries;
-  });
+  File.read('data/questions.json').then(function(response) {
+	  $scope.questions = response.templateQueries;
+	  console.log('Number of questions', $scope.questions.length);
+	  }, function(response) {
+	  console.log("Error reading template query file", response);  
+	  });
+    
 
   $timeout(function() {
     // preload the autocomplete values
