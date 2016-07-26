@@ -7,9 +7,9 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?diseaseURI ?disease ?biobank ?biobankURI ?registry ?registryURI  {
   
  VALUES(?diseaseInput) {(<#disease#>)}   
-  {
+  
     ?diseaseURI  rdfs:subClassOf* ?diseaseInput.
-  }
+  
   {    
     ?donorURI dummy:hasDisease ?diseaseURI; 
               rdfs:seeAlso ?registryDatasetURI.

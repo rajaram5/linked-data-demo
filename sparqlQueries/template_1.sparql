@@ -20,4 +20,4 @@ SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenoty
     ?diseaseURI rdfs:label ?disease.  
     ?phenotypeURI rdfs:label ?phenotype.
   }
-}  #group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI
+}  group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI
