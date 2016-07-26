@@ -51,8 +51,10 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
         variables['#'+variable+'#'] = $scope.variables[variable];
       });
       HttpEndpoint.query(query, variables).then(function(response) {
-        $scope.results = response.results;
-        $scope.rows = $scope.getValues(response.results.bindings, response.head.vars);
+        console.log(response);
+        
+        $scope.results = response.data;
+        $scope.rows = $scope.getValues(response.data.results.bindings, response.data.head.vars);
       });
     });
   };

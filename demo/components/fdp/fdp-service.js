@@ -37,10 +37,14 @@ app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
               var dataset = datasets[did];
               // load the dataset and query for all distributions
               p2.push(cacheAndQuery(dataset, 'data/query/getDistributions.sparql').then(function(distributions) {
+                var p3 = [];
+                
                 Object.keys(distributions).forEach(function(distId) {
                   var dist = distributions[distId];
-                  HttpEndpoint.load(dist);
+                  p3.push(HttpEndpoint.load(dist));
                 });
+                
+                return $q.all(p3);
               }, angular.noop));
             });
             
