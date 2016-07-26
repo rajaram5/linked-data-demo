@@ -1,22 +1,24 @@
-app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, FDP) {
+app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, FDP, HttpEndpoint, $rootScope) {
+  $scope.loadingData = true;
   FDP.load('http://semlab1.liacs.nl:8080/fdp');
   
-  $scope.selectedQuestion = null;
   $scope.variables = {};
-  $scope.questions = null;
-  $scope.questionsVariables = null;
   
   File.read('data/questions.json').then(function(response) {
 	  $scope.questions = response.templateQueries;
 	  $scope.questionsVariables = response.variables;
 	  console.log('Number of questions', $scope.questions.length);
-	  console.log('Number of questionsVariables', $scope.questionsVariables.length);
-	  }, function(response) {
-	  console.log("Error reading template query file", response);  
-	  });
-    
 
-  $timeout(function() {
+	  console.log('Number of questionsVariables', $scope.questionsVariables.length);
+  }, function(response) {
+	  console.log("Error reading template query file", response);  
+  });
+    
+  
+  $rootScope.$on('fdp-data-loaded', function() {
+    console.log('received broadcast fdp-data-loaded');
+    $scope.loadingData = false;
+    
     // preload the autocomplete values
     $scope.vars = {};
     angular.forEach($scope.questions, function(question, key) {
@@ -33,7 +35,7 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
         });
       });
     });
-  }, 20000);
+  });
   
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
@@ -41,25 +43,16 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
   };  
   
   $scope.process = function() {
-    TemplateQueries.questions().then(function(questions) {
-      console.log('questions', questions.templateQueries);
-      console.log('selected question index', $scope.selectedQuestion);
-      var question = questions.templateQueries[$scope.selectedQuestion];
-      console.log('selected question', question);
-      console.log('chosen variables', $scope.variables);
-      
-      $http.get('data/query/' + question.queryFileName).then(function(response) {
-        var query = response.data;
-        
-        question.variables.forEach(function(v) {
-          query = query.replace('#'+v+'#', $scope.variables[v]);
-        });
-        
-        Cache.query(query).then(function(results) {
-          console.log('cache query results', results);
-        }, function(response) {
-          console.log('cache query error', response);
-        });
+    var question = $scope.questions[$scope.selectedQuestion];
+    
+    File.read('data/query/' + question.queryFileName).then(function(query) {
+      var variables = {};
+      question.variables.forEach(function(variable) {
+        variables['#'+variable+'#'] = $scope.variables[variable];
+      });
+      HttpEndpoint.query(query, variables).then(function(response) {
+        $scope.results = response.results;
+        $scope.rows = $scope.getValues(response.results.bindings, response.head.vars);
       });
     });
   };
