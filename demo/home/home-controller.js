@@ -3,10 +3,14 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
   
   $scope.selectedQuestion = null;
   $scope.variables = {};
+  $scope.questions = null;
+  $scope.questionsVariables = null;
   
   File.read('data/questions.json').then(function(response) {
 	  $scope.questions = response.templateQueries;
+	  $scope.questionsVariables = response.variables;
 	  console.log('Number of questions', $scope.questions.length);
+	  console.log('Number of questionsVariables', $scope.questionsVariables.length);
 	  }, function(response) {
 	  console.log("Error reading template query file", response);  
 	  });
@@ -20,8 +24,9 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
         if ($scope.vars[variable]) {
           return;
         }
-        
-        var promise = Data.variables(variable);
+        var varFileName = $scope.questionsVariables[variable].queryFileName;
+        var file = 'data/query/' + varFileName;
+        var promise = Data.variables(file);
         $scope.vars[variable] = promise;
         promise.then(function(vars) {
           $scope.vars[variable] = vars;
