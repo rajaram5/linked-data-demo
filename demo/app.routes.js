@@ -5,6 +5,9 @@ app.config(function($routeProvider) {
   }).when('/about', {
     templateUrl: 'about/about.html',
     controller: 'AboutCtrl'
+  }).when('/stats', {
+    templateUrl: 'stats/stats.html',
+    controller: 'StatsCtrl'
   }).otherwise({
     redirectTo: '/'
   });
