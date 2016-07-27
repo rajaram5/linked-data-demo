@@ -3,6 +3,7 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
   FDP.load('http://semlab1.liacs.nl:8080/fdp');
   
   $scope.variables = {};
+  $scope.isResultAvailable = false;
   
   File.read('data/questions.json').then(function(response) {
 	  $scope.questions = response.templateQueries;
@@ -40,9 +41,12 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
     console.log('preloaded variables:', $scope.vars);
+    $scope.isResultAvailable = false;
+    $scope.isEmptyRows = false;
   };  
   
   $scope.process = function() {
+    $scope.isResultAvailable = false;
     var question = $scope.questions[$scope.selectedQuestion];
     
     File.read('data/query/' + question.queryFileName).then(function(query) {
@@ -51,9 +55,9 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
         variables['#'+variable+'#'] = $scope.variables[variable];
       });
       HttpEndpoint.query(query, variables).then(function(response) {
-        console.log(response);
-        
-        $scope.results = response.data;
+        console.log(response);        
+        $scope.results = response.data;        
+        $scope.isResultAvailable = true;
         $scope.rows = $scope.getValues(response.data.results.bindings, response.data.head.vars);
       }).then(function() {
         // Manually added timeout. (This is a work around) 
