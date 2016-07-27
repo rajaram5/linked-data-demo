@@ -19,7 +19,7 @@
     "angular": "^1.5.7",
     "angular-route": "^1.5.7",
     "bootstrap": "^3.3.6",
-    "rdfstore": "^0.9.15"
+    "jquery.simplePagination": "smarulanda/jquery.simplePagination"
   },
   "overrides": {
     "angular": {
@@ -27,8 +27,9 @@
         "jquery": "*"
       }
     },
-    "rdfstore": {
-      "dependencies": {
+    "jquery.simplePagination": {
+	  "main": "jquery.simplePagination.js",
+	  "dependencies": {
         "jquery": "*"
       }
     }

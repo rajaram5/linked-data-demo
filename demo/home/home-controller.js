@@ -55,6 +55,18 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, 
         
         $scope.results = response.data;
         $scope.rows = $scope.getValues(response.data.results.bindings, response.data.head.vars);
+      }).then(function() {
+        // Manually added timeout. (This is a work around) 
+        $timeout(function(){
+          console.log('trying to enable pagination');
+          jQuery('#footest').simplePagination({
+            perPage: 10,
+            previousButtonText: 'Prev',
+            nextButtonText: 'Next',
+            previousButtonClass: "btn btn-primary btn-xs",        
+            nextButtonClass: "btn btn-primary btn-xs"
+          });
+        }, 100);
       });
     });
   };
