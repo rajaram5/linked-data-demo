@@ -1,5 +1,5 @@
 app.service('HttpEndpoint', function($q, $http, $timeout) {
-  var endpointBaseUrl = 'http://localhost:8891/';
+  var endpointBaseUrl = 'http://192.168.99.100:8890//';
   var endpoint = endpointBaseUrl + 'sparql';
   var fooEndpoint = endpointBaseUrl + 'DAV/home/demo/';
   var username = 'dba';
@@ -28,33 +28,43 @@ app.service('HttpEndpoint', function($q, $http, $timeout) {
     load: function(resource, accept) {
       var deferred = $q.defer();
       
-      $http.get(resource, {
+      var name = resource.substring(resource.lastIndexOf('/') + 1);
+      var cacheLocation = fooEndpoint + name;
+      
+      $http.head(cacheLocation, {
         headers: {
-          Accept: accept || 'text/turtle'
+          Accept: accept || 'text/turtle',
+          Authorization: 'Basic ZGJhOmRiYQ=='
         }
-      }).then(function(response) {
-        var name = resource.substring(resource.lastIndexOf('/') + 1);
-        var contentType = response.headers('content-type');
-        
-//        console.log('caching file with name and content type of', name, contentType);
-        $timeout(function(){
-          $http.put(fooEndpoint + name, response.data, {
+      }).then(function success(response) {
+        // stop loading the file
+        deferred.resolve();
+      }, function error(response) {
+        if (response.status === 404) {
+          $http.get(resource, {
             headers: {
-              'Content-Type': contentType,
-              //'Authorization': 'Basic '+ base64.encode(username + ':' + password)
-              Authorization: 'Basic ZGJhOmRiYQ=='
+              Accept: accept || 'text/turtle'
             }
-          }).then(function(res) {
-  //          console.log('successfully PUT file in endpoint');
-            deferred.resolve(res);
-          }, function(res) {
-            console.log('failed to PUT file in endpoint');
-            deferred.reject(res);
+          }).then(function(response) {
+            var contentType = response.headers('content-type');
+            $http.put(cacheLocation, response.data, {
+              headers: {
+                'Content-Type': contentType,
+                Authorization: 'Basic ZGJhOmRiYQ=='
+              }
+            }).then(function(res) {
+              deferred.resolve(res);
+            }, function(res) {
+              console.log('failed to PUT file in endpoint');
+              deferred.reject(res);
+            });
+          }, function(response) {
+            console.log('failed to retrieve', resource);
+            deferred.reject(response);
           });
-        }, 1000/*ms*/);
-      }, function(response) {
-        console.log('failed to retrieve', resource);
-        deferred.reject(response);
+        } else {
+          // log error
+        }
       });
       
       return deferred.promise;
