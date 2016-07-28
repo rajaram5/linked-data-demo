@@ -1,7 +1,14 @@
 app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
-  var cacheAndQuery = function(url, nextQueryFile) {
+  /**
+   * Caches the content of the url using {@link HttpEndpoint#load}, reads the query
+   * file using {@link File}, and executes the query using {@link HttpEndpoint#query}.
+   * @param {string} url - to cache and query
+   * @param {string} queryFile - sparql query file location
+   * @return {promise} Result of the sparql query
+   */
+  var cacheAndQuery = function(url, queryFile) {
     return HttpEndpoint.load(url).then(function() {
-      return File.read(nextQueryFile).then(function(query) {
+      return File.read(queryFile).then(function(query) {
         return HttpEndpoint.query(query, {
           '#inputUrl#': url
         }).then(function(response) {
@@ -19,6 +26,11 @@ app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
   };
   
   return {
+    /**
+     * Loads all levels of metadata for the given FAIR Data Point. When all loading
+     * is finished, an event named 'fdp-data-loaded' is fired.
+     * @param {string} root - the root of a FAIR Data Point
+     */
     load: function(root) {
       
       // load the FDP root and query for all catalogs
