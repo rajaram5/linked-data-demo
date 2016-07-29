@@ -1,4 +1,13 @@
-<h1>Stats</h1>
-<p>
---- TODO ---
-</p>
+<div class="panel panel-info">  
+  <div class="panel-heading">
+    <h3 class="panel-title">FDP stats</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="list-group">    
+	    <li ng-repeat="(name, count) in stats" class="list-group-item">
+		    <span class="badge">{{count}}</span>
+		    {{name}}
+		  </li>
+	</ul>
+  </div>
+</div>

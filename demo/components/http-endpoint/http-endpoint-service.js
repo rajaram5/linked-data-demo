@@ -1,10 +1,20 @@
 app.service('HttpEndpoint', function($q, $http, $timeout) {
   //var endpointBaseUrl = 'http://192.168.99.100:8890//';
-  var endpointBaseUrl = 'http://localhost:8891//';
+  var endpointBaseUrl = 'http://localhost:8891/';
   var endpoint = endpointBaseUrl + 'sparql';
   var fooEndpoint = endpointBaseUrl + 'DAV/home/demo/';
   var username = 'dba';
   var password = 'dba';
+  var getResourceName = function(url) {
+    var urlParser = document.createElement('a');
+    urlParser.href = url;
+    var urlLocalName = url.substring(url.lastIndexOf('/') + 1);
+    var name = urlParser.hostname + urlParser.port + urlLocalName;
+    name = name.replace(/\./g, "_");
+    console.log("resourceNamet == ", name);
+    return name;
+    
+  }
   
   return {
     /**
@@ -28,10 +38,9 @@ app.service('HttpEndpoint', function($q, $http, $timeout) {
     },
     load: function(resource, accept) {
       var deferred = $q.defer();
-      
+      //var name = getResourceName(resource);     
       var name = resource.substring(resource.lastIndexOf('/') + 1);
-      var cacheLocation = fooEndpoint + name;
-      
+      var cacheLocation = fooEndpoint + name;      
       $http.head(cacheLocation, {
         headers: {
           Accept: accept || 'text/turtle',

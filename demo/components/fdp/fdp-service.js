@@ -1,4 +1,4 @@
-app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
+app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScope) {   
   /**
    * Caches the content of the url using {@link HttpEndpoint#load}, reads the query
    * file using {@link File}, and executes the query using {@link HttpEndpoint#query}.
@@ -31,26 +31,30 @@ app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
      * is finished, an event named 'fdp-data-loaded' is fired.
      * @param {string} root - the root of a FAIR Data Point
      */
-    load: function(root) {
-      
+
+    load: function(fairDataPoints) {
+      Statistics.setFairDataPointsCount(Object.keys(fairDataPoints).length);
+      var catalogsCount = 0;
+      angular.forEach(fairDataPoints,function(fdp, index){
+        console.log("Loading data from ",fdp.name, " FDP. Base url is ", fdp.url);
       // load the FDP root and query for all catalogs
-      var uberpromise = cacheAndQuery(root, 'data/query/getCatalogs.sparql').then(function(catalogs) {
-        console.log(catalogs);
-        
+      var uberpromise = cacheAndQuery(fdp.url, 'data/query/getCatalogs.sparql').then(function(catalogs) {
+        console.log("catalogs for ",fdp.name, " FDP ",catalogs);
+        catalogsCount = catalogsCount + Object.keys(catalogs).length;
+        Statistics.setCatalogsCount(catalogsCount);
         var p = [];
-        
         Object.keys(catalogs).forEach(function(cid) {
           var catalog = catalogs[cid];
           // load the catalog and query for all datasets
           p.push(cacheAndQuery(catalog, 'data/query/getDataset.sparql').then(function(datasets) {
             var p2 = [];
-            
+            Statistics.setDataSetsCount(Object.keys(datasets).length);
             Object.keys(datasets).forEach(function(did) {
               var dataset = datasets[did];
               // load the dataset and query for all distributions
               p2.push(cacheAndQuery(dataset, 'data/query/getDistributions.sparql').then(function(distributions) {
                 var p3 = [];
-                
+                Statistics.setDistributionsCount(Object.keys(distributions).length);
                 Object.keys(distributions).forEach(function(distId) {
                   var dist = distributions[distId];
                   p3.push(HttpEndpoint.load(dist));
@@ -58,8 +62,7 @@ app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
                 
                 return $q.all(p3);
               }, angular.noop));
-            });
-            
+            });            
             return $q.all(p2);
           }, angular.noop));
         });
@@ -96,6 +99,7 @@ app.service('FDP', function($http, HttpEndpoint, File, $q, $rootScope) {
       }, function() {
         console.log('failed uberloop');
       });
-    }
+    })
+  }
   };
 });
