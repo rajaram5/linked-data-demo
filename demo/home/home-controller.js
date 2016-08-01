@@ -1,7 +1,9 @@
 app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, FDP, HttpEndpoint, $rootScope) {
   $scope.loadingData = true;
-  $scope.fairDataPoints=[{name:"rdconnect", url:"http://semlab1.liacs.nl:8080/fdp"},
-                         {name:"dtl", url:"http://145.100.59.120:8082/fdp"}]
+  $scope.fairDataPoints=[
+                         {name:"rdconnect", url:"http://semlab1.liacs.nl:8080/fdp"},
+                         //{name:"dtl", url:"http://145.100.59.120:8082/fdp"}
+                         ];
   FDP.load($scope.fairDataPoints); 
   
   $scope.variables = {};

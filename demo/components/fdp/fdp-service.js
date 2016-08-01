@@ -35,6 +35,8 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScop
     load: function(fairDataPoints) {
       Statistics.setFairDataPointsCount(Object.keys(fairDataPoints).length);
       var catalogsCount = 0;
+      var datasetsCount = 0;
+      var distributionsCount = 0;
       angular.forEach(fairDataPoints,function(fdp, index){
         console.log("Loading data from ",fdp.name, " FDP. Base url is ", fdp.url);
       // load the FDP root and query for all catalogs
@@ -47,16 +49,19 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScop
           var catalog = catalogs[cid];
           // load the catalog and query for all datasets
           p.push(cacheAndQuery(catalog, 'data/query/getDataset.sparql').then(function(datasets) {
-            var p2 = [];
-            Statistics.setDataSetsCount(Object.keys(datasets).length);
+            var p2 = [];            
             Object.keys(datasets).forEach(function(did) {
               var dataset = datasets[did];
+              datasetsCount = datasetsCount + 1;
+              Statistics.setDataSetsCount(datasetsCount);
               // load the dataset and query for all distributions
               p2.push(cacheAndQuery(dataset, 'data/query/getDistributions.sparql').then(function(distributions) {
                 var p3 = [];
                 Statistics.setDistributionsCount(Object.keys(distributions).length);
                 Object.keys(distributions).forEach(function(distId) {
                   var dist = distributions[distId];
+                  distributionsCount = distributionsCount + 1;
+                  Statistics.setDistributionsCount(distributionsCount);
                   p3.push(HttpEndpoint.load(dist));
                 });
                 
@@ -74,11 +79,12 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScop
         File.read('data/query/getTurtleDistributionFiles.sparql').then(function(query) {
           HttpEndpoint.query(query).then(function(response) {
             var promises = [];
-            
-            // result is expected to be id,url mappings where url is the download location
+            var turtleFilesCount = 0;
+            // result is expected to be id,url mappings where url is the download location            
             response.data.results.bindings.forEach(function(binding) {
               var url = binding.url.value;
-              
+              turtleFilesCount = turtleFilesCount + 1;
+              Statistics.setTurtleFilesCount(turtleFilesCount);
               // load each file
               var promise = HttpEndpoint.load(url).then(function(response) {
                 console.log('loaded', url, response);

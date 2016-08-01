@@ -38,8 +38,8 @@ app.service('HttpEndpoint', function($q, $http, $timeout) {
     },
     load: function(resource, accept) {
       var deferred = $q.defer();
-      //var name = getResourceName(resource);     
-      var name = resource.substring(resource.lastIndexOf('/') + 1);
+      var name = getResourceName(resource);     
+      //var name = resource.substring(resource.lastIndexOf('/') + 1);
       var cacheLocation = fooEndpoint + name;      
       $http.head(cacheLocation, {
         headers: {
