@@ -1,37 +1,35 @@
 <!-- Page Content -->
-<div class="container"> 
-  <div class="panel-body">
-	  <div class="alert alert-info" role="alert" ng-if="loadingData">
-		Loading data...		
-	  </div>
-	  	
-	<!-- Add FDP section -->
-	<div class="row" ng-repeat="fdp in fairDataPoints" >
-		<div class="form-inline">
-		    <input type="text" class="form-control" placeholder="Enter FDP name" ng-model="fdp.name">
-		    <input type="text" class="form-control" placeholder="Enter FDP URL" ng-model="fdp.url">
-		    <a class="btn" ng-click="removeFdp(fdp)">Delete</a>
-		</div>
+
+<div class="container">
+	<div class="panel panel-primary">
+		<div class="panel-body">
+		  <form>
+		    <div class="form-group row">
+		    	<div class="offset-sm-2 col-sm-10">
+			    	<div class="form-inline" ng-repeat="fdp in fairDataPoints" >
+						<input type="text" class="form-control" placeholder="Enter FDP name" ng-model="fdp.name">
+						<input type="text" class="form-control" placeholder="Enter FDP URL" ng-model="fdp.url">
+						<a class="btn" ng-click="removeFdp(fdp)">Delete</a>
+					</div>     
+				</div> 
+		    </div>
+		    <!-- Add FDP section -->
+		    <div class="form-group row">
+		    	<a href="" ng-click="addFdp()" class="btn" role="button">Add new FDP</a>
+		    </div>
+		    <!-- Cache button section  -->
+		    <div class="form-group row">
+		      <div class="offset-sm-2 col-sm-10">
+		        <button type="button" ng-click="cache()" class="btn btn-primary has-spinner" id="cache" data-btn-text="caching...">
+		        Cache        
+			    </button>
+		      </div>
+		    </div>
+		  </form>
+		</div>		  
+		<!-- Log section-->
+		<div class="alert alert-info" role="alert" ng-if="isCachingStarted">
+	       <pre> {{log}} </pre>
+	    </div> 
 	</div>
-	<a href="" ng-click="addFdp()" class="btn btn-primary" role="button">Add new FDP</a>	
-<!-- 	<button ng-click="addFdp()">New FDP</button> -->
-    
-	<!-- Cache button section  -->
-	<div class="panel-footer panel-info">
-		<div class="row">
-	       <div class="col-md-4"></div>
-	            <div class="col-md-4">
-	                <button type="button" ng-click="cache()" class="btn btn-red btn-lg btn-block has-spinner" id="cache" data-btn-text="caching...">
-	                	Cache <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
-	            	</button>
-	        	</div>
-	    	<div class="col-md-4"></div>
-		</div>                
-	</div>   
-  </div>
 </div>
-
-
-
-
-  
