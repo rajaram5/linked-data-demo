@@ -1,4 +1,4 @@
-app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScope) {   
+app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $rootScope) {   
   /**
    * Caches the content of the url using {@link HttpEndpoint#load}, reads the query
    * file using {@link File}, and executes the query using {@link HttpEndpoint#query}.
@@ -8,6 +8,7 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScop
    */
   var cacheAndQuery = function(url, queryFile) {
     return HttpEndpoint.load(url).then(function() {
+      Log.appendToLog("Loading content of <" + url + ">");
       return File.read(queryFile).then(function(query) {
         return HttpEndpoint.query(query, {
           '#inputUrl#': url
@@ -38,7 +39,8 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScop
       var datasetsCount = 0;
       var distributionsCount = 0;
       angular.forEach(fairDataPoints,function(fdp, index){
-        console.log("Loading data from ",fdp.name, " FDP. Base url is ", fdp.url);
+        var logMsg = "Loading data from '" + fdp.name + "'";
+        Log.appendToLog(logMsg);
       // load the FDP root and query for all catalogs
       var uberpromise = cacheAndQuery(fdp.url, 'data/query/getCatalogs.sparql').then(function(catalogs) {
         console.log("catalogs for ",fdp.name, " FDP ",catalogs);

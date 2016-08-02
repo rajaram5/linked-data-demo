@@ -1,6 +1,6 @@
-app.controller('CacheCtrl', function($scope, $rootScope, FDP, Caching) {    
+app.controller('CacheCtrl', function($scope, $rootScope, FDP, Caching, Log) {    
   $scope.isCachingStarted = false;
-  $scope.log = "";
+  $scope.log = null;
   $scope.fairDataPoints=[{name: "RD connect FDP", url:"http://semlab1.liacs.nl:8080/fdp"}];
   
   $scope.addFdp = function () {
@@ -15,21 +15,19 @@ app.controller('CacheCtrl', function($scope, $rootScope, FDP, Caching) {
   };
   
   $scope.cache = function() {
+    Log.reset();
     $scope.isCachingStarted = true;
-    $scope.log = "";
-    $scope.log = $scope.log + $scope.getFormatedLog("Caching started");
+    var logMsg = "Caching started";    
+    Log.appendToLog(logMsg);
+    $scope.log = Log.get();
     FDP.load($scope.fairDataPoints); 
-    $rootScope.$on('fdp-data-loaded', function() {
-      console.log('Caching is done');
+    $rootScope.$on('fdp-data-loaded', function() {            
       $scope.loadingData = false;
       Caching.setCachingState(true);
-      $scope.log = $scope.log + $scope.getFormatedLog("Caching is DONE");
+      logMsg = "Caching is done"; 
+      Log.appendToLog(logMsg);
+      $scope.log = Log.get();
     });
-  };
-  
-  $scope.getFormatedLog = function(text) {    
-    var log =  "[" + new Date() +"]" + text + "\n";    
-    return log;
   };
   
 });
