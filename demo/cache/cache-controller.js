@@ -26,7 +26,7 @@ app.controller('CacheCtrl', function($scope, $rootScope, FDP, Caching, Log) {
       Caching.setCachingState(true);
       logMsg = "Caching is done"; 
       Log.appendToLog(logMsg);
-      $scope.log = Log.get();
+      //$scope.log = Log.get();
     });
   };
   

@@ -9,7 +9,7 @@
     <tbody>
         <tr ng-repeat="result in rows">
             <td ng-repeat="value in result track by $index">
-                <a ng-if="value.uri" ng-href="{{value.uri}}">{{value.label}}</a>
+                <a ng-if="value.uri" target="_blank" ng-href="{{value.uri}}">{{value.label}}</a>
                 <span ng-if="!value.uri">{{value.label}}</span>
             </td>
         </tr>

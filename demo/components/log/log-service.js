@@ -1,15 +1,17 @@
 app.service('Log', function($filter) {
   
-  var log = "";  
+  var log = [];  
   return { 
-    appendToLog: function(x) {   
-      console.log(x);
+    appendToLog: function(msg) {   
+      console.log(msg);
       var date = $filter('date')(new Date(), 'dd/MM/yyyy');
       var time = $filter('date')(new Date(), 'HH:mm:ss');
-      log =  log + "[" + date + "  " + time +"]\t" + x + "\n";        
+      log.push({ 
+        time:time, date:date, message:msg
+      });     
     },
     get: function(){return log;},
-    reset: function(){log = "";}
+    reset: function(){log = [];}
     };
   
 });

@@ -11,7 +11,6 @@ app.service('HttpEndpoint', function($q, $http, $timeout) {
     var urlLocalName = url.substring(url.lastIndexOf('/') + 1);
     var name = urlParser.hostname + urlParser.port + urlLocalName;
     name = name.replace(/\./g, "_");
-    console.log("resourceNamet == ", name);
     return name;
     
   }

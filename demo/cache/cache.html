@@ -26,10 +26,17 @@
 		      </div>
 		    </div>
 		  </form>
-		</div>		  
-		<!-- Log section-->
-		<div class="alert alert-info" role="alert" ng-if="isCachingStarted">
-	       <pre>{{log}}</pre>
-	    </div> 
+		</div>    
+	</div>
+	
+	<div class="panel panel-primary" ng-if="isCachingStarted" >
+		<div class="panel-body">		  
+			<!-- Log section-->
+			<div class="panel-body" style="height: 300px; overflow-y: scroll;">	
+				<p ng-repeat="x in log" >
+				<kbd>[{{x.date}}  {{x.time}}]</kbd>  {{x.message}}
+				</p>						
+		    </div> 
+		</div>	    
 	</div>
 </div>
