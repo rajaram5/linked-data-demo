@@ -1,7 +1,11 @@
 <!-- Page Content -->
 
 <div class="container">
-	<div class="panel panel-primary">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-cog"></span>
+			Configure cache
+		</div>
 		<div class="panel-body">
 		  <form>
 		    <div class="form-group row">
@@ -9,7 +13,7 @@
 			    	<div class="form-inline" ng-repeat="fdp in fairDataPoints" >
 						<input type="text" class="form-control" placeholder="Enter FDP name" ng-model="fdp.name">
 						<input type="text" class="form-control" placeholder="Enter FDP URL" ng-model="fdp.url">
-						<a class="btn" ng-click="removeFdp(fdp)">Delete</a>
+						<span ng-click="removeFdp(fdp)" class="glyphicon glyphicon-remove text-danger"></span>						
 					</div>     
 				</div> 
 		    </div>
@@ -29,7 +33,11 @@
 		</div>    
 	</div>
 	
-	<div class="panel panel-primary" ng-if="isCachingStarted" >
+	<div class="panel panel-info" ng-if="isCachingStarted" >
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-info-sign"></span>
+			Log
+		</div>
 		<div class="panel-body">		  
 			<!-- Log section-->
 			<div class="panel-body" style="height: 300px; overflow-y: scroll;">	
