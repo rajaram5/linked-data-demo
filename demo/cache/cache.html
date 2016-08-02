@@ -1,10 +1,22 @@
-<div class="panel panel-info">
+<!-- Page Content -->
+<div class="container"> 
   <div class="panel-body">
 	  <div class="alert alert-info" role="alert" ng-if="loadingData">
 		Loading data...		
-	  </div>	
+	  </div>
+	  	
+	<!-- Add FDP section -->
+	<div class="row" ng-repeat="fdp in fairDataPoints" >
+		<div class="form-inline">
+		    <input type="text" class="form-control" placeholder="Enter FDP name" ng-model="fdp.name">
+		    <input type="text" class="form-control" placeholder="Enter FDP URL" ng-model="fdp.url">
+		    <a class="btn" ng-click="removeFdp(fdp)">Delete</a>
+		</div>
+	</div>
+	<a href="" ng-click="addFdp()" class="btn btn-primary" role="button">Add new FDP</a>	
+<!-- 	<button ng-click="addFdp()">New FDP</button> -->
+    
 	<!-- Cache button section  -->
-	
 	<div class="panel-footer panel-info">
 		<div class="row">
 	       <div class="col-md-4"></div>
