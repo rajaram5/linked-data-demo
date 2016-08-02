@@ -1,49 +1,45 @@
-app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Cache, FDP, HttpEndpoint, $rootScope) {
-  $scope.loadingData = true;
-  $scope.fairDataPoints=[
-                         {name:"rdconnect", url:"http://semlab1.liacs.nl:8080/fdp"},
-                         //{name:"dtl", url:"http://145.100.59.120:8082/fdp"}
-                         ];
-  FDP.load($scope.fairDataPoints); 
-  
+app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Caching, FDP, HttpEndpoint, $rootScope) {  
+  $scope.isCachingAvailable = Caching.getCachingState();  
   $scope.variables = {};
   $scope.isResultAvailable = false;
+  //$scope.vars = {};
   
   File.read('data/questions.json').then(function(response) {
-	  $scope.questions = response.templateQueries;
-	  $scope.questionsVariables = response.variables;
-	  console.log('Number of questions', $scope.questions.length);
+    $scope.questions = response.templateQueries;
+    $scope.questionsVariables = response.variables;
+    console.log('Number of questions', $scope.questions.length);
 
-	  console.log('Number of questionsVariables', $scope.questionsVariables.length);
+    console.log('Number of questionsVariables', $scope.questionsVariables.length);
   }, function(response) {
-	  console.log("Error reading template query file", response);  
+    console.log("Error reading template query file", response);  
   });
     
-  
-  $rootScope.$on('fdp-data-loaded', function() {
-    console.log('received broadcast fdp-data-loaded');
-    $scope.loadingData = false;
-    
-    // preload the autocomplete values
-    $scope.vars = {};
-    angular.forEach($scope.questions, function(question, key) {
-      angular.forEach(question.variables, function(variable) {
-        if ($scope.vars[variable]) {
-          return;
-        }
-        var varFileName = $scope.questionsVariables[variable].queryFileName;
-        var file = 'data/query/' + varFileName;
-        var promise = Data.variables(file);
-        $scope.vars[variable] = promise;
-        promise.then(function(vars) {
-          $scope.vars[variable] = vars;
+  $scope.getVariableValues = function(){
+    if($scope.isCachingAvailable) {
+      // preload the autocomplete values
+      $scope.vars = {};
+      angular.forEach($scope.questions, function(question, key) {
+        angular.forEach(question.variables, function(variable) {
+          if ($scope.vars[variable]) {
+            return;
+          }
+          var varFileName = $scope.questionsVariables[variable].queryFileName;
+          var file = 'data/query/' + varFileName;
+          var promise = Data.variables(file);
+          $scope.vars[variable] = promise;
+          promise.then(function(vars) {
+            $scope.vars[variable] = vars;
+          });
         });
       });
-    });
-  });
+    };
+    
+  };
+  
   
   $scope.questionChanged = function() {
     console.log('selected question', $scope.selectedQuestion);
+    $scope.getVariableValues();
     console.log('preloaded variables:', $scope.vars);
     $scope.isResultAvailable = false;
     $scope.isEmptyRows = false;

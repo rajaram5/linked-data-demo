@@ -85,14 +85,15 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, $q, $rootScop
               var url = binding.url.value;
               turtleFilesCount = turtleFilesCount + 1;
               Statistics.setTurtleFilesCount(turtleFilesCount);
-              // load each file
-              var promise = HttpEndpoint.load(url).then(function(response) {
-                console.log('loaded', url, response);
-              }, function(response) {
-                console.log('failed to load', response);
-              });
-              
-              promises.push(promise);
+              // load each file. Note: Due to implicitome server failure we skip the data hosted in implicitome server.
+              if(url != 'http://implicitome.cloud.tilaa.nl/goNlSvR5/rdf.ttl') {
+                var promise = HttpEndpoint.load(url).then(function(response) {
+                  console.log('loaded', url, response);
+                }, function(response) {
+                  console.log('failed to load', response);
+                });                
+                promises.push(promise);                
+              }              
             });
             
             // broadcast event when all files are loaded
