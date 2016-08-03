@@ -24,7 +24,7 @@ app.controller('CacheCtrl', function($scope, $rootScope, FDP, Caching, Log) {
     $rootScope.$on('fdp-data-loaded', function() {            
       $scope.loadingData = false;
       Caching.setCachingState(true);
-      logMsg = "Caching is done"; 
+      logMsg = 'Caching is done'; 
       Log.appendToLog(logMsg);
     });
   };

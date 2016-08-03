@@ -17,7 +17,7 @@ app.service('Log', function($filter, $timeout) {
       if (logElementId) {
         var elem = document.getElementById(logElementId);
         if (elem) {
-          elem.scrollTop = elem.scrollHeight;
+          elem.scrollTop = elem.scrollHeight + 1;
         }
       }
     },
