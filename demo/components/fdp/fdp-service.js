@@ -59,7 +59,6 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
               // load the dataset and query for all distributions
               p2.push(cacheAndQuery(dataset, 'data/query/getDistributions.sparql').then(function(distributions) {
                 var p3 = [];
-                Statistics.setDistributionsCount(Object.keys(distributions).length);
                 Object.keys(distributions).forEach(function(distId) {
                   var dist = distributions[distId];
                   distributionsCount = distributionsCount + 1;
