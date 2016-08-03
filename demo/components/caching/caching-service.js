@@ -1,10 +1,13 @@
-app.service('Caching', function() {
+app.service('Caching', function($cookies) {
   
   var isCachingAvailable = false;
   
   return { 
-    setCachingState: function(x) {isCachingAvailable = x},
-    getCachingState: function(){return isCachingAvailable;}
-    };
-  
+    setCachingState: function(x) {
+      $cookies.put('cachestate', true);
+    },
+    getCachingState: function() {
+      return $cookies.get('cachestate') || false;
+    }
+  };
 });

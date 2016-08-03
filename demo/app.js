@@ -1,1 +1,1 @@
-var app = angular.module('demo', ['ngRoute', 'templates']);
+var app = angular.module('demo', ['ngRoute', 'ngCookies', 'templates']);

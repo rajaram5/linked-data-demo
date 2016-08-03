@@ -19,7 +19,8 @@
     "angular": "^1.5.7",
     "angular-route": "^1.5.7",
     "bootstrap": "^3.3.6",
-    "jquery.simplePagination": "smarulanda/jquery.simplePagination"
+    "jquery.simplePagination": "smarulanda/jquery.simplePagination",
+    "angular-cookies": "^1.5.8"
   },
   "overrides": {
     "angular": {
@@ -28,8 +29,8 @@
       }
     },
     "jquery.simplePagination": {
-	  "main": "jquery.simplePagination.js",
-	  "dependencies": {
+      "main": "jquery.simplePagination.js",
+      "dependencies": {
         "jquery": "*"
       }
     }
