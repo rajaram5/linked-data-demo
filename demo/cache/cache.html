@@ -40,9 +40,9 @@
 		</div>
 		<div class="panel-body">		  
 			<!-- Log section-->
-			<div class="panel-body" style="height: 300px; overflow-y: scroll;">	
+			<div id="log-panel" class="panel-body" style="height: 300px; overflow-y: scroll;">	
 				<p ng-repeat="x in log" >
-				<kbd>[{{x.date}}  {{x.time}}]</kbd>  {{x.message}}
+				    <kbd>[{{x.date}}  {{x.time}}]</kbd>  {{x.message}}
 				</p>						
 		    </div> 
 		</div>	    
