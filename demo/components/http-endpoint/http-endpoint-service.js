@@ -1,6 +1,6 @@
 app.service('HttpEndpoint', function($q, $http, $timeout) {
   //var endpointBaseUrl = 'http://192.168.99.100:8890//';
-  var endpointBaseUrl = 'http://localhost:8891/';
+  var endpointBaseUrl = 'http://localhost:8890/';
   var endpoint = endpointBaseUrl + 'sparql';
   var fooEndpoint = endpointBaseUrl + 'DAV/home/demo/';
   var username = 'dba';
