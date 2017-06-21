@@ -1,6 +1,6 @@
 app.controller('CacheCtrl', function($scope, $rootScope, FDP, Caching, Log) {    
   $scope.isCachingStarted = false;
-  $scope.fairDataPoints=[{name: "RD connect FDP", url:"http://semlab1.liacs.nl:8080/fdp"}];
+  $scope.fairDataPoints=[{name: "RD connect FDP", url:"http://localhost:8084/fairdatapoint/fdp"}];
   
   $scope.addFdp = function () {
     $scope.fairDataPoints.push({ 
