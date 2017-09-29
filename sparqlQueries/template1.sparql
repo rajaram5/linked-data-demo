@@ -5,7 +5,7 @@ PREFIX iao: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 
-SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI ?biobankDistributionURI ?biobankDatasetURI  {      
+SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI {      
    VALUES(?phenotypeInput) {(<#phenotype#>)}    
   {
     ?phenotypeURI  rdfs:subClassOf* ?phenotypeInput.  
@@ -17,10 +17,10 @@ SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenoty
      ?sampleURI rdcMeta:e297332a_00a9_4ed0_b661_00dbd35aff95 ?donorURI
      }
      
-    ?biobankDatasetURI dct:title ?biobank;
-                      dcat:landingPage ?biobankURI;
+    ?biobankURI dct:title ?biobank;
+                      #dcat:landingPage ?biobankURI;
                       dcat:distribution ?biobankDistributionURI.   
     ?diseaseURI rdfs:label ?disease.  
     ?phenotypeURI rdfs:label ?phenotype.
   }
-}  group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI ?biobankDistributionURI ?biobankDatasetURI
+}  group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI ?biobankDistributionURI

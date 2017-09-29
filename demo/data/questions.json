@@ -1,28 +1,28 @@
 {
   "templateQueries": [
     {
-      "text": "Get number of biosamples from donors with a specific phenotype",
+      "text": "[W] Get number of biosamples from donors with a specific phenotype",
       "variables": [
         "phenotype"
       ],
       "queryFileName": "template1.sparql"
     },
     {
-      "text": "Get number of persons with a specific phenotype",
+      "text": "[W] Get number of persons with a specific phenotype",
       "variables": [
         "phenotype"
       ],
       "queryFileName": "template7.sparql"
     },
     {
-      "text": "Get number of biosamples from donors with a specific disease",
+      "text": "[W] Get number of biosamples from donors with a specific disease",
       "variables": [
         "disease"
       ],
       "queryFileName": "template2.sparql"
     },
     {
-      "text": "Get number of biosamples from donors with a specific phenotype and from a specific region",
+      "text": "[W] Get number of biosamples from donors with a specific phenotype and from a specific region",
       "variables": [
         "phenotype",
         "region"
@@ -30,7 +30,7 @@
       "queryFileName": "template3.sparql"
     },
     {
-      "text": "Get biosamples from donors with a specific phenotype and specific sampletypes",
+      "text": "[W] Get biosamples from donors with a specific phenotype and specific sampletypes",
       "variables": [
         "phenotype",
         "sampleType"
