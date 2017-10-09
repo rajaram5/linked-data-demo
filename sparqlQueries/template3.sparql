@@ -4,28 +4,27 @@ PREFIX rdcMeta: <http://rdf.biosemantics.org/ontologies/rd-connect/>
 PREFIX iao: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dbpedia: <http://dbpedia.org/ontology/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
 
 SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI ?registry ?registryURI ?region ?regionURI {
      
  VALUES(?phenotypeInput ?regionURI) {(<#phenotype#> <#region#>)}   
-  {
+  
     ?phenotypeURI  rdfs:subClassOf* ?phenotypeInput.
-  } 
-  {    
+   
+  GRAPH ?registryDistributionURI {    
     ?donorURI dummy:hasDisease ?diseaseURI;
                rdcMeta:59e1324d_567b_42e1_bc88_203004e660da ?phenotypeURI;               
-             dbpedia:birthPlace ?regionURI;
-             rdfs:seeAlso ?registryDatasetURI.
+             dbpedia:birthPlace ?regionURI.
   }   
-  {    
-    ?sampleURI rdcMeta:e297332a_00a9_4ed0_b661_00dbd35aff95 ?donorURI;
-               rdfs:seeAlso ?biobankDatasetURI.
+  GRAPH ?biobankDistributionURI {    
+    ?sampleURI rdcMeta:e297332a_00a9_4ed0_b661_00dbd35aff95 ?donorURI.
   }    
   {    
-    ?biobankDatasetURI dct:title ?biobank;
-                      rdfs:seeAlso ?biobankURI.
-    ?registryDatasetURI dct:title ?registry;
-                      rdfs:seeAlso ?registryURI. 
+    ?biobankURI dct:title ?biobank;
+                      dcat:distribution ?biobankDistributionURI. 
+    ?registryURI dct:title ?registry;
+                      dcat:distribution ?registryDistributionURI. 
     ?diseaseURI rdfs:label ?disease.  
     ?phenotypeURI rdfs:label ?phenotype.
     {

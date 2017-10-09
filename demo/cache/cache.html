@@ -1,0 +1,61 @@
+<!-- Page Content -->
+
+<div class="container">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-cog"></span>
+			Configure cache
+		</div>
+		<div class="panel-body">
+		  <form>
+		  	<div class="form-group row" ng-repeat="fdp in fairDataPoints">
+			  <div class="col-lg-4">
+			    <div class="input-group">
+			      <span class="input-group-addon">String</span>
+			      <input type="text" class="form-control" aria-label="..." placeholder="Enter FDP name" ng-model="fdp.name">
+			    </div><!-- /input-group -->
+			  </div><!--/.col-lg-4 -->
+			  <div class="col-lg-6">
+			    <div class="input-group">
+			      <span class="input-group-addon">Url</span>
+			      <input type="text" class="form-control" aria-label="..."  placeholder="Enter FDP URL" ng-model="fdp.url">
+			    </div><!--/input-group -->
+			  </div> <!--/.col-lg-6 -->
+			  <div class="col-lg-2">
+			    <div class="input-group">
+			    <div> </div>
+			      <span ng-click="removeFdp(fdp)" class="glyphicon glyphicon-trash text-danger"></span>
+			    </div><!--/input-group-->
+			  </div><!--/.col-lg-2 -->			  
+			</div>
+		    <!-- Add FDP section -->
+		    <div class="form-group row">
+		    	<a href="" ng-click="addFdp()" class="btn" role="button">Add new FDP</a>
+		    </div>
+		    <!-- Cache button section  -->
+		    <div class="form-group row">
+		      <div class="offset-sm-2 col-sm-10">
+		        <button type="button" ng-click="cache()" class="btn btn-primary has-spinner" id="cache" data-btn-text="caching...">
+		        Cache        
+			    </button>
+		      </div>
+		    </div>
+		  </form>
+		</div>    
+	</div>
+	
+	<div class="panel panel-info" ng-if="isCachingStarted" >
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-info-sign"></span>
+			Log
+		</div>
+		<div class="panel-body">		  
+			<!-- Log section-->
+			<div id="log-panel" class="panel-body" style="height: 300px; overflow-y: scroll;">	
+				<p ng-repeat="x in log" >
+				    <kbd>[{{x.date}}  {{x.time}}]</kbd>  {{x.message}}
+				</p>						
+		    </div> 
+		</div>	    
+	</div>
+</div>

@@ -1,0 +1,27 @@
+<div ng-repeat="variable in questions[selectedQuestion].variables">
+	<div  class="row" id="{{variable}}">
+		<div class="col-md-4"><button type="button" class="btn btn-voilet btn-lg btn-block">{{variable}}</button></div>
+	    <div class="col-md-4"><button type="button" class="btn btn-default btn-lg btn-block"><i>type</i></button></div>  
+	    <div class="col-md-4">
+	        <input class="form-control" type="text" ng-attr-list="{{variable}}-list" ng-model="variables[variable]" placeholder="Type your {{variable}} here">
+	        <datalist ng-attr-id="{{variable}}-list">
+	    	    <option ng-repeat="option in vars[variable]" ng-value="option.uri">{{option.label}}</option>
+	    	</datalist> 
+	    </div>
+	</div>
+	<p></p>
+</div>
+
+<!-- Process button section  -->
+
+<div class="panel-footer panel-info">
+	<div class="row">
+       <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <button type="button" ng-click="process()" class="btn btn-red btn-lg btn-block has-spinner" id="process" data-btn-text="Loading...">
+                	Process <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+            	</button>
+        	</div>
+    	<div class="col-md-4"></div>
+	</div>                
+</div>

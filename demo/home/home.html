@@ -1,0 +1,43 @@
+<!-- Page Content -->
+<div class="container">  
+	<div class="alert alert-warning" role="alert" ng-if="!isCachingAvailable">
+		<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+        The data cache is not available. Please start the <a href="#cache">caching process!!!</a>
+    </div>  
+	<div class="row">
+    	<div class="col-lg-12">
+        	<div class="page-header text-center">
+              <h1>FAIR Data Demonstrator</h1>
+            </div>
+			<div class="panel panel-info" id="step1">
+				<div class="panel-heading">
+			    	<h3 class="panel-title">Step 1 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Select query:</h3>
+			    </div>
+				<questions></questions>
+			</div>
+			 <div class="panel panel-info" id="step2" ng-if="selectedQuestion">
+             	<div class="panel-heading">
+                	<h3 class="panel-title">Step 2 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> By which value?</h3>
+              	</div>
+              	<div class="panel-body"> 
+              		<variables></variables>
+              	</div>              	
+             </div>             
+             
+             <div class="panel panel-info" id="step3" ng-if="isResultAvailable">              
+              <div class="panel-heading">                
+                <h3 class="panel-title">Step 3 <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> Result:</h3>
+              </div>
+              <div class="panel-body">                  
+            <div class="alert alert-info fade in" ng-show="rows.length == 0">   
+                <p><strong> No result :</strong> Sorry no result available for these query params</p>
+            </div>
+            <results ng-show="rows.length > 0"></results> 
+              </div>
+            </div>			
+		</div>
+	</div>
+</div>
+<!-- /.container -->
+
+	

@@ -1,0 +1,102 @@
+{
+  "templateQueries": [
+    {
+      "text": "[W] Get number of biosamples from donors with a specific phenotype",
+      "variables": [
+        "phenotype"
+      ],
+      "queryFileName": "template1.sparql"
+    },
+    {
+      "text": "[W] Get number of persons with a specific phenotype",
+      "variables": [
+        "phenotype"
+      ],
+      "queryFileName": "template7.sparql"
+    },
+    {
+      "text": "[W] Get number of biosamples from donors with a specific disease",
+      "variables": [
+        "disease"
+      ],
+      "queryFileName": "template2.sparql"
+    },
+    {
+      "text": "[W] Get number of biosamples from donors with a specific phenotype and from a specific region",
+      "variables": [
+        "phenotype",
+        "region"
+      ],
+      "queryFileName": "template3.sparql"
+    },
+    {
+      "text": "[W] Get biosamples from donors with a specific phenotype and specific sampletypes",
+      "variables": [
+        "phenotype",
+        "sampleType"
+      ],
+      "queryFileName": "template9.sparql"
+    },
+    {
+      "text": "Get biosamples from donors with a specific disease and a specific karyotype",
+      "variables": [
+        "disease",
+        "karyotype"
+      ],
+      "queryFileName": "template4.sparql"
+    },
+    {
+      "text": "Get biosamples from donors with a specific disease, a specific karyotype and specific sampletypes",
+      "variables": [
+        "disease",
+        "sampleType",
+        "karyotype"
+      ],
+      "queryFileName": "template5.sparql"
+    },
+    {
+      "text": "Get biosamples from donors with a specific disease, a specific karyotype, a specific breakpoint localization and a specific sampletype",
+      "variables": [
+        "disease",
+        "sampleType",
+        "karyotype",
+        "breakpoint"
+      ],
+      "queryFileName": "template6.sparql"
+    },
+    {
+      "text": "Get diseases sharing phenotypes",
+      "variables": [
+        "disease"
+      ],
+      "queryFileName": "template8.sparql"
+    },
+    {
+      "text": "Get biosamples from donors sharing phenotypes",
+      "variables": [
+        "disease"
+      ],
+      "queryFileName": "template10.sparql"
+    }
+  ],
+  "variables": {
+    "disease": {
+      "queryFileName": "getDiseases.sparql"
+    },
+    "sampleType": {
+      "queryFileName": "getSampleTypes.sparql"
+    },
+    "karyotype": {
+      "queryFileName": "getKaryotypes.sparql"
+    },
+    "breakpoint": {
+      "queryFileName": "getBreakpoints.sparql"
+    },
+    "phenotype": {
+      "queryFileName": "getPhenotypes.sparql"
+    },
+    "region": {
+      "queryFileName": "getRegions.sparql"
+    }
+  }
+}
