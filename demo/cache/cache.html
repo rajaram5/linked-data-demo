@@ -1,10 +1,9 @@
-<!-- Page Content -->
-
 <div class="container">
+<!-- FDP caching config -->
 	<div class="panel panel-info">
 		<div class="panel-heading">
 			<span class="glyphicon glyphicon-cog"></span>
-			Configure cache
+			FDP cache configuration
 		</div>
 		<div class="panel-body">
 		  <form>
@@ -42,7 +41,43 @@
 		    </div>
 		  </form>
 		</div>    
+	</div>	
+		
+		
+	<div class="container">
+	<!-- Search caching config -->
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			<span class="glyphicon glyphicon-cog"></span>
+			FDP from search cache configuration
+		</div>
+		<div class="panel-body">
+		  <form>
+		  	<div class="form-group row">
+			  <div class="col-lg-6">
+			    <div class="input-group">
+			      <span class="input-group-addon">Url</span>
+			      <input type="text" class="form-control" aria-label="..."  placeholder="Enter serach engine URL" ng-model="searchEngineUrl">
+			    </div><!--/input-group -->
+			  </div> <!--/.col-lg-6 -->			  
+			</div>
+		    <!-- Cache button section  -->
+		    <div class="form-group row">
+		      <div class="offset-sm-2 col-sm-10">
+		        <button type="button" ng-click="cacheSearch()" class="btn btn-primary has-spinner" id="cache" data-btn-text="caching...">
+		        Cache        
+			    </button>
+		      </div>
+		    </div>
+		  </form>
+		</div>    
 	</div>
+	
+	
+	
+	
+	
+	
 	
 	<div class="panel panel-info" ng-if="isCachingStarted" >
 		<div class="panel-heading">
