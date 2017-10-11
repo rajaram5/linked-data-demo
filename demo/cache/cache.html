@@ -1,96 +1,93 @@
-<div class="container">
-<!-- FDP caching config -->
-	<div class="panel panel-info">
-		<div class="panel-heading">
-			<span class="glyphicon glyphicon-cog"></span>
-			FDP cache configuration
-		</div>
-		<div class="panel-body">
-		  <form>
-		  	<div class="form-group row" ng-repeat="fdp in fairDataPoints">
-			  <div class="col-lg-4">
-			    <div class="input-group">
-			      <span class="input-group-addon">String</span>
-			      <input type="text" class="form-control" aria-label="..." placeholder="Enter FDP name" ng-model="fdp.name">
-			    </div><!-- /input-group -->
-			  </div><!--/.col-lg-4 -->
-			  <div class="col-lg-6">
-			    <div class="input-group">
-			      <span class="input-group-addon">Url</span>
-			      <input type="text" class="form-control" aria-label="..."  placeholder="Enter FDP URL" ng-model="fdp.url">
-			    </div><!--/input-group -->
-			  </div> <!--/.col-lg-6 -->
-			  <div class="col-lg-2">
-			    <div class="input-group">
-			    <div> </div>
-			      <span ng-click="removeFdp(fdp)" class="glyphicon glyphicon-trash text-danger"></span>
-			    </div><!--/input-group-->
-			  </div><!--/.col-lg-2 -->			  
+<uib-accordion close-others="oneAtATime"> <!-- FDP caching config -->
+<div uib-accordion-group class="panel-info">
+	<uib-accordion-heading> <span
+		class="glyphicon glyphicon-cog"></span> FDP cache configuration <i
+		class="pull-right glyphicon"
+		ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+	</uib-accordion-heading>
+	<form>
+		<div class="form-group row" ng-repeat="fdp in fairDataPoints">
+			<div class="col-lg-4">
+				<div class="input-group">
+					<span class="input-group-addon">String</span> <input type="text"
+						class="form-control" aria-label="..." placeholder="Enter FDP name"
+						ng-model="fdp.name">
+				</div>
 			</div>
-		    <!-- Add FDP section -->
-		    <div class="form-group row">
-		    	<a href="" ng-click="addFdp()" class="btn" role="button">Add new FDP</a>
-		    </div>
-		    <!-- Cache button section  -->
-		    <div class="form-group row">
-		      <div class="offset-sm-2 col-sm-10">
-		        <button type="button" ng-click="cache()" class="btn btn-primary has-spinner" id="cache" data-btn-text="caching...">
-		        Cache        
-			    </button>
-		      </div>
-		    </div>
-		  </form>
-		</div>    
-	</div>	
-		
-		
-	<div class="container">
-	<!-- Search caching config -->
-	<div class="panel panel-info">
-		<div class="panel-heading">
-			<span class="glyphicon glyphicon-cog"></span>
-			FDP from search cache configuration
-		</div>
-		<div class="panel-body">
-		  <form>
-		  	<div class="form-group row">
-			  <div class="col-lg-6">
-			    <div class="input-group">
-			      <span class="input-group-addon">Url</span>
-			      <input type="text" class="form-control" aria-label="..."  placeholder="Enter serach engine URL" ng-model="searchEngineUrl">
-			    </div><!--/input-group -->
-			  </div> <!--/.col-lg-6 -->			  
+			<div class="col-lg-6">
+				<div class="input-group">
+					<span class="input-group-addon">Url</span> <input type="text"
+						class="form-control" aria-label="..." placeholder="Enter FDP URL"
+						ng-model="fdp.url">
+				</div>
 			</div>
-		    <!-- Cache button section  -->
-		    <div class="form-group row">
-		      <div class="offset-sm-2 col-sm-10">
-		        <button type="button" ng-click="cacheSearch()" class="btn btn-primary has-spinner" id="cache" data-btn-text="caching...">
-		        Cache        
-			    </button>
-		      </div>
-		    </div>
-		  </form>
-		</div>    
+			<div class="col-lg-2">
+				<div class="input-group">
+					<div></div>
+					<span ng-click="removeFdp(fdp)"
+						class="glyphicon glyphicon-trash text-danger"></span>
+				</div>
+			</div>
+		</div>
+		<!-- Add FDP section -->
+		<div class="form-group row">
+			<a href="" ng-click="addFdp()" class="btn" role="button">Add new
+				FDP</a>
+		</div>
+		<!-- Cache button section  -->
+		<div class="form-group row">
+			<div class="offset-sm-2 col-sm-10">
+				<button type="button" ng-click="cache()"
+					class="btn btn-primary has-spinner" id="cache"
+					data-btn-text="caching...">Cache</button>
+			</div>
+		</div>
+	</form>
+</div>
+
+
+<!-- Search caching config -->
+<div uib-accordion-group class="panel-info">
+	<uib-accordion-heading> <span
+		class="glyphicon glyphicon-cog"></span> FDP from search cache
+	configuration <i class="pull-right glyphicon"
+		ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+	</uib-accordion-heading>
+	<form>
+		<div class="form-group row">
+			<div class="col-lg-6">
+				<div class="input-group">
+					<span class="input-group-addon">Url</span> <input type="text"
+						class="form-control" aria-label="..."
+						placeholder="Enter serach engine URL" ng-model="searchEngineUrl">
+				</div>
+			</div>
+		</div>
+		<!-- Cache button section  -->
+		<div class="form-group row">
+			<div class="offset-sm-2 col-sm-10">
+				<button type="button" ng-click="cacheSearch(searchEngineUrl)"
+					class="btn btn-primary has-spinner" id="cache"
+					data-btn-text="caching...">Cache</button>
+			</div>
+		</div>
+	</form>
+</div>
+</uib-accordion>
+
+
+<div class="panel panel-info" ng-if="isCachingStarted">
+	<div class="panel-heading">
+		<span class="glyphicon glyphicon-info-sign"></span> Log
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	<div class="panel panel-info" ng-if="isCachingStarted" >
-		<div class="panel-heading">
-			<span class="glyphicon glyphicon-info-sign"></span>
-			Log
+	<div class="panel-body">
+		<!-- Log section-->
+		<div id="log-panel" class="panel-body"
+			style="height: 300px; overflow-y: scroll;">
+			<p ng-repeat="x in log">
+				<kbd>[{{x.date}} {{x.time}}]</kbd>
+				{{x.message}}
+			</p>
 		</div>
-		<div class="panel-body">		  
-			<!-- Log section-->
-			<div id="log-panel" class="panel-body" style="height: 300px; overflow-y: scroll;">	
-				<p ng-repeat="x in log" >
-				    <kbd>[{{x.date}}  {{x.time}}]</kbd>  {{x.message}}
-				</p>						
-		    </div> 
-		</div>	    
 	</div>
 </div>
