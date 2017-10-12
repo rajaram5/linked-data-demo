@@ -1,7 +1,7 @@
 app.service('HttpEndpoint', function($q, $http, $timeout) {
   //var endpointBaseUrl = 'http://192.168.99.100:8890//';
-  //var endpointBaseUrl = 'http://localhost:8079/blazegraph/';
-  var endpointBaseUrl = 'http://136.243.4.200:8081/blazegraph/';
+  var endpointBaseUrl = 'http://localhost:8079/blazegraph/';
+  //var endpointBaseUrl = 'http://136.243.4.200:8081/blazegraph/';
   var endpoint = endpointBaseUrl + 'namespace/test/sparql';
   var fooEndpoint = endpointBaseUrl + 'namespace/test/sparql';
   var getResourceName = function(url) {

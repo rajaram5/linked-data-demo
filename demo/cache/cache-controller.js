@@ -1,7 +1,8 @@
 app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Log) {    
   $scope.isCachingStarted = false;
   $scope.fairDataPoints=[{name: "RD connect FDP", url:"http://localhost:8084/fairdatapoint/fdp"}];
-  $scope.searchEngineUrl=null;
+  $scope.searchEngineUrl = null;
+  $scope.oneAtATime = true;
   
   $scope.addFdp = function () {
     $scope.fairDataPoints.push({ 
