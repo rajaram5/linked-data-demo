@@ -18,15 +18,13 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Lo
     Log.reset();
     Log.setLogElementId('log-panel');
     $scope.isCachingStarted = true;
-    var logMsg = "Caching started";
-    Log.appendToLog(logMsg);
+    Log.appendToLog("Caching started");
     $scope.log = Log.get();
     FDP.load($scope.fairDataPoints); 
     $rootScope.$on('fdp-data-loaded', function() {            
       $scope.loadingData = false;
       Caching.setCachingState(true);
-      logMsg = 'Caching is done'; 
-      Log.appendToLog(logMsg);
+      Log.appendToLog("Caching is done");
     });
   };
   
@@ -34,8 +32,7 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Lo
     Log.reset();
     Log.setLogElementId('log-panel');
     $scope.isCachingStarted = true;
-    var logMsg = "Caching started";
-    Log.appendToLog(logMsg);
+    Log.appendToLog("Caching started");
     $scope.log = Log.get();
     $http.get(url)
     .then(function(response) {
@@ -46,8 +43,7 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Lo
     $rootScope.$on('fdp-data-loaded', function() {            
       $scope.loadingData = false;
       Caching.setCachingState(true);
-      logMsg = 'Caching is done'; 
-      Log.appendToLog(logMsg);
+      Log.appendToLog("Caching is done");
     });
   };
   
