@@ -21,7 +21,9 @@ gulp.task('js', function() {
   var html = gulp.src('demo/**/!(index)*.html')
     .pipe(plugins.angularTemplatecache({standalone: true}));
   
-  var js = gulp.src('demo/**/*.js');
+  var js = gulp.src('demo/**/*.js')
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('jshint-stylish'));
   
   return merge(js, html)
     .pipe(plugins.concat('demo.js'))
