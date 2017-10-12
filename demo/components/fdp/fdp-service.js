@@ -6,9 +6,9 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
    * @param {string} queryFile - sparql query file location
    * @return {promise} Result of the sparql query
    */
-  var cacheAndQuery = function(url, urlExt, graphUri, queryFile, cacheEndPoint) {
-    return HttpEndpoint.load((url + urlExt), cacheEndPoint, graphUri).then(function() {
-      Log.appendToLog("Loading content of <" + url + "> and caching in <"+cacheEndPoint+">");
+  var cacheAndQuery = function(url, urlExt, graphUri, queryFile) {
+    return HttpEndpoint.load((url + urlExt), graphUri).then(function() {
+      Log.appendToLog("Loading content of <" + url + ">");
       return File.read(queryFile).then(function(query) {
         return HttpEndpoint.query(query, {
           '#inputUrl#': url
@@ -33,17 +33,16 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
      * @param {string} root - the root of a FAIR Data Point
      */
 
-    load: function(fairDataPoints, cacheEndPoint) {
+    load: function(fairDataPoints) {
       Statistics.setFairDataPointsCount(Object.keys(fairDataPoints).length);
       var catalogsCount = 0;
       var datasetsCount = 0;
       var distributionsCount = 0;
       angular.forEach(fairDataPoints,function(fdp, index){
-		alert(cacheEndPoint);
-        var logMsg = "Loading data from '" + fdp.name + "' and going to cache to '"+cacheEndPoint+"'";
+        var logMsg = "Loading data from '" + fdp.name;
         Log.appendToLog(logMsg);
       // load the FDP root and query for all catalogs
-      var uberpromise = cacheAndQuery(fdp.url, ".ttl", fdp.url, 'data/query/getCatalogs.sparql', cacheEndPoint).then(function(catalogs) {
+      var uberpromise = cacheAndQuery(fdp.url, ".ttl", fdp.url, 'data/query/getCatalogs.sparql').then(function(catalogs) {
         console.log("catalogs for ",fdp.name, " FDP ",catalogs);
         catalogsCount = catalogsCount + Object.keys(catalogs).length;
         Statistics.setCatalogsCount(catalogsCount);
@@ -51,21 +50,21 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
         Object.keys(catalogs).forEach(function(cid) {
           var catalog = catalogs[cid];
           // load the catalog and query for all datasets
-          p.push(cacheAndQuery(catalog, ".ttl", fdp.url,  'data/query/getDataset.sparql', cacheEndPoint).then(function(datasets) {
+          p.push(cacheAndQuery(catalog, ".ttl", fdp.url,  'data/query/getDataset.sparql').then(function(datasets) {
             var p2 = [];            
             Object.keys(datasets).forEach(function(did) {
               var dataset = datasets[did];
               datasetsCount = datasetsCount + 1;
               Statistics.setDataSetsCount(datasetsCount);
               // load the dataset and query for all distributions
-              p2.push(cacheAndQuery(dataset, ".ttl", fdp.url, 'data/query/getDistributions.sparql', cacheEndPoint).then(function(distributions) {
+              p2.push(cacheAndQuery(dataset, ".ttl", fdp.url, 'data/query/getDistributions.sparql').then(function(distributions) {
                 var p3 = [];
                 Object.keys(distributions).forEach(function(distId) {
                   var dist = distributions[distId];
                   distributionsCount = distributionsCount + 1;
                   Statistics.setDistributionsCount(distributionsCount);
                   Log.appendToLog("Loading content of <" + dist + ">");
-                  p3.push(HttpEndpoint.load(dist + ".ttl", cacheEndPoint), fdp.url);
+                  p3.push(HttpEndpoint.load(dist + ".ttl"), fdp.url);
                 });
                 
                 return $q.all(p3);
@@ -92,7 +91,7 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
               // load each file. Note: Due to implicitome server failure we skip the data hosted in implicitome server.
               if(url != 'http://implicitome.cloud.tilaa.nl/goNlSvR5/rdf.ttl') {
                 Log.appendToLog("Loading content of <" + url + ">");
-                var promise = HttpEndpoint.load(url, cacheEndPoint, distributionUri).then(function(response) {
+                var promise = HttpEndpoint.load(url, distributionUri).then(function(response) {
                   console.log('loaded', url, response);
                 }, function(response) {
                   console.log('failed to load', response);

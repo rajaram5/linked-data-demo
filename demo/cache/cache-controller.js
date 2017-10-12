@@ -1,8 +1,7 @@
-app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Log, GENERAL_CONFIG) {    
+app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Log) {    
   $scope.isCachingStarted = false;
   $scope.fairDataPoints=[{name: "RD connect FDP", url:"http://localhost:8084/fairdatapoint/fdp"}];
   $scope.searchEngineUrl=null;
-  $scope.endPointBaseUrl = GENERAL_CONFIG.END_POINT_BASE_URL;
 	
   $scope.addFdp = function () {
     $scope.fairDataPoints.push({ 
@@ -21,7 +20,7 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Lo
     $scope.isCachingStarted = true;
     Log.appendToLog("Caching started");
     $scope.log = Log.get();
-    FDP.load($scope.fairDataPoints, $scope.endPointBaseUrl); 
+    FDP.load($scope.fairDataPoints); 
     $rootScope.$on('fdp-data-loaded', function() {            
       $scope.loadingData = false;
       Caching.setCachingState(true);
@@ -39,7 +38,7 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Lo
     .then(function(response) {
         var fdps = response.data;
         console.log(fdps);
-        FDP.load(fdps, $scope.endPointBaseUrl);
+        FDP.load(fdps);
     });
     $rootScope.$on('fdp-data-loaded', function() {            
       $scope.loadingData = false;
