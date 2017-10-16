@@ -39,7 +39,7 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
       var datasetsCount = 0;
       var distributionsCount = 0;
       angular.forEach(fairDataPoints,function(fdp, index){
-        var logMsg = "Loading data from '" + fdp.name + "'";
+        var logMsg = "Loading data from '" + fdp.name;
         Log.appendToLog(logMsg);
       // load the FDP root and query for all catalogs
       var uberpromise = cacheAndQuery(fdp.url, ".ttl", fdp.url, 'data/query/getCatalogs.sparql').then(function(catalogs) {
