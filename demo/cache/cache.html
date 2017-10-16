@@ -1,9 +1,9 @@
 <uib-accordion close-others="oneAtATime"> <!-- FDP caching config -->
-<div uib-accordion-group class="panel-info">
+<div uib-accordion-group class="panel-info" is-open="fdpCache.open">
 	<uib-accordion-heading> <span
 		class="glyphicon glyphicon-cog"></span> FDP cache configuration <i
 		class="pull-right glyphicon"
-		ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		ng-class="{'glyphicon-chevron-down': fdpCache.open, 'glyphicon-chevron-right': !fdpCache.open}"></i>
 	</uib-accordion-heading>
 	<form>
 		<div class="form-group row" ng-repeat="fdp in fairDataPoints">
@@ -45,11 +45,11 @@
 
 
 <!-- Search caching config -->
-<div uib-accordion-group class="panel-info">
+<div uib-accordion-group class="panel-info" is-open="searchCache.open">
 	<uib-accordion-heading> <span
 		class="glyphicon glyphicon-cog"></span> FDP from search cache
 	configuration <i class="pull-right glyphicon"
-		ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+		ng-class="{'glyphicon-chevron-down': searchCache.open, 'glyphicon-chevron-right': !searchCache.open}"></i>
 	</uib-accordion-heading>
 	<form>
 		<div class="form-group row">
