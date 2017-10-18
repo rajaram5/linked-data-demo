@@ -23,16 +23,19 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Caching
           if ($scope.vars[variable]) {
             return;
           }
-          var varFileName = $scope.questionsVariables[variable].queryFileName;
-          var file = 'data/query/' + varFileName;
-          var promise = Data.variables(file);
-          $scope.vars[variable] = promise;
-          promise.then(function(vars) {
-            $scope.vars[variable] = vars;
-          });
+          // Variable JSON config is not defined it is a free text input
+          if($scope.questionsVariables[variable] != undefined) {
+            var varFileName = $scope.questionsVariables[variable].queryFileName;
+            var file = 'data/query/' + varFileName;
+            var promise = Data.variables(file);
+            $scope.vars[variable] = promise;
+            promise.then(function(vars) {
+              $scope.vars[variable] = vars;
+            });            
+          }
         });
       });
-    };
+    }
     
   };
   

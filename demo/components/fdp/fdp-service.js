@@ -110,7 +110,7 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
       }, function() {
         console.log('failed uberloop');
       });
-    })
+    });
   }
   };
 });
