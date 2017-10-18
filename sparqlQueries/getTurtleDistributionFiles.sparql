@@ -7,7 +7,7 @@ SELECT DISTINCT ?distributionUri ?url ?id {
 
 ?distributionUri a dcat:Distribution;
           dcat:mediaType "text/turtle";
-          dcat:downloadURL|dcat:accessURL ?url. 
+          dcat:downloadURL ?url. 
 BIND(REPLACE(str(?url), '^.*(#|/)', "") AS ?id)
         
 }
