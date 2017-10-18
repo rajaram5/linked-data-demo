@@ -1,6 +1,6 @@
 app.service('Log', function($filter, $timeout) {
   var log = [];
-  var logElementId = undefined;
+  var logElementId;
   
   return {
     setLogElementId: function(id) {

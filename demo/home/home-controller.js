@@ -35,7 +35,7 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, Caching
           }
         });
       });
-    };
+    }
     
   };
   
