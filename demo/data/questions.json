@@ -77,6 +77,13 @@
         "disease"
       ],
       "queryFileName": "template10.sparql"
+    },
+    {
+      "text": "[RIVM] Get data catalog collections",
+      "variables": [
+        "collection"
+      ],
+      "queryFileName": "template11.sparql"
     }
   ],
   "variables": {
@@ -97,6 +104,9 @@
     },
     "region": {
       "queryFileName": "getRegions.sparql"
+    },
+    "collection": {
+      "queryFileName": "getCollections.sparql"
     }
   }
 }
