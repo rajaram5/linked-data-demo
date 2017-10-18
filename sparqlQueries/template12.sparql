@@ -9,19 +9,19 @@ PREFIX obohp: <http://purl.obolibrary.org/obo/hp#>
 
 SELECT (COUNT( DISTINCT ?donorURI) as ?numberOfPersons)  ?phenotypeURI ?phenotype ?diseaseURI ?disease ?registry ?registryURI  {
       
- VALUES(?phenotypeInput) {("#plainText#")}   
+	VALUES(?phenotypeInput) {("#plainText#")}   
   
-    ?phenotypeURI  rdfs:label ?phenotype;
-     go:inSubset obohp:hposlim_core.  
+	?phenotypeURI  rdfs:label ?phenotype;
+		go:inSubset obohp:hposlim_core.  
 	FILTER regex(str(?phenotype), ?phenotypeInput, "i") .
    
-  GRAPH ?registryDistributionURI {    
-    ?donorURI dummy:hasDisease ?diseaseURI;
-               rdcMeta:59e1324d_567b_42e1_bc88_203004e660da ?phenotypeURI.
-  }    
-  {       
-    ?registryURI dct:title ?registry;
-                      dcat:distribution ?registryDistributionURI.   
-    ?diseaseURI rdfs:label ?disease.
-  }
-}  group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?registry ?registryURI
+	GRAPH ?registryDistributionURI {    
+		?donorURI dummy:hasDisease ?diseaseURI;
+			rdcMeta:59e1324d_567b_42e1_bc88_203004e660da ?phenotypeURI.
+	}    
+	{       
+		?registryURI dct:title ?registry;
+			dcat:distribution ?registryDistributionURI.   
+		?diseaseURI rdfs:label ?disease.
+	}
+} group by ?phenotypeURI ?phenotype ?diseaseURI ?disease ?registry ?registryURI
