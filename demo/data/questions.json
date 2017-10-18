@@ -84,6 +84,13 @@
         "collection"
       ],
       "queryFileName": "template11.sparql"
+    },
+    {
+      "text": "[TextBased] Get number of persons with a specific phenotype",
+      "variables": [
+        "plainText"
+      ],
+      "queryFileName": "template12.sparql"
     }
   ],
   "variables": {
