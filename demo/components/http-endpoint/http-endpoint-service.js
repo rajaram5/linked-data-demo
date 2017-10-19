@@ -6,9 +6,7 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
   //var endpointBaseUrl = 'http://localhost:8079/blazegraph/';\
   
   var endpointBaseUrl = GENERAL_CONFIG.END_POINT_BASE_URL;
-
   var endpoint = endpointBaseUrl + 'namespace/test/sparql';
-  var fooEndpoint = endpointBaseUrl + 'namespace/test/sparql';
 	
   var getResourceName = function(url) {	
     var urlParser = document.createElement('a');
@@ -18,7 +16,7 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
     name = name.replace(/\./g, "_");
     return name;
     
-  }
+  };
   
   return {
     /**
@@ -42,13 +40,11 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
     },
     load : function(resource, graphUri) {
       var deferred = $q.defer();
-      var cacheLocation = fooEndpoint;
-		
-      resource = resource
+      var cacheLocation = endpoint;
       if (graphUri) {
-        cacheLocation = cacheLocation + '?uri='+resource+'&context-uri=' + graphUri
+        cacheLocation = cacheLocation + '?uri='+resource+'&context-uri=' + graphUri;
       } else {
-        cacheLocation = cacheLocation + '?uri='+resource+'&context-uri=' + resource
+        cacheLocation = cacheLocation + '?uri='+resource+'&context-uri=' + resource;
       }
       
       $http.post(cacheLocation, {
