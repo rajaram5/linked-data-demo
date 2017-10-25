@@ -6,8 +6,8 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
    * @param {string} queryFile - sparql query file location
    * @return {promise} Result of the sparql query
    */
-  var cacheAndQuery = function(url, urlExt, graphUri, queryFile) {
-    return HttpEndpoint.load((url + urlExt), graphUri).then(function() {
+  var cacheAndQuery = function(url, graphUri, queryFile) {
+    return HttpEndpoint.load(url, graphUri).then(function() {
       Log.appendToLog("Loading content of <" + url + ">");
       return File.read(queryFile).then(function(query) {
         return HttpEndpoint.query(query, {
@@ -42,7 +42,7 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
         var logMsg = "Loading data from '" + fdp.name;
         Log.appendToLog(logMsg);
       // load the FDP root and query for all catalogs
-      var uberpromise = cacheAndQuery(fdp.url, ".ttl", fdp.url, 'data/query/getCatalogs.sparql').then(function(catalogs) {
+      var uberpromise = cacheAndQuery(fdp.url, fdp.url, 'data/query/getCatalogs.sparql').then(function(catalogs) {
         console.log("catalogs for ",fdp.name, " FDP ",catalogs);
         catalogsCount = catalogsCount + Object.keys(catalogs).length;
         Statistics.setCatalogsCount(catalogsCount);
@@ -50,14 +50,14 @@ app.service('FDP', function($http, HttpEndpoint, File, Statistics, Log, $q, $roo
         Object.keys(catalogs).forEach(function(cid) {
           var catalog = catalogs[cid];
           // load the catalog and query for all datasets
-          p.push(cacheAndQuery(catalog, ".ttl", fdp.url,  'data/query/getDataset.sparql').then(function(datasets) {
+          p.push(cacheAndQuery(catalog, fdp.url,  'data/query/getDataset.sparql').then(function(datasets) {
             var p2 = [];            
             Object.keys(datasets).forEach(function(did) {
               var dataset = datasets[did];
               datasetsCount = datasetsCount + 1;
               Statistics.setDataSetsCount(datasetsCount);
               // load the dataset and query for all distributions
-              p2.push(cacheAndQuery(dataset, ".ttl", fdp.url, 'data/query/getDistributions.sparql').then(function(distributions) {
+              p2.push(cacheAndQuery(dataset, fdp.url, 'data/query/getDistributions.sparql').then(function(distributions) {
                 var p3 = [];
                 Object.keys(distributions).forEach(function(distId) {
                   var dist = distributions[distId];
