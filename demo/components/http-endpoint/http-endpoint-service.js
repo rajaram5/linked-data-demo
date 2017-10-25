@@ -41,16 +41,18 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
     load : function(resource, graphUri) {
       var deferred = $q.defer();
       var cacheLocation = endpoint;
-      if (graphUri) {
-        cacheLocation = cacheLocation + '?uri='+resource+'&context-uri=' + graphUri;
-      } else {
-        cacheLocation = cacheLocation + '?uri='+resource+'&context-uri=' + resource;
+      var context-uri = resource
+	 if (graphUri) {
+        context-uri = graphUri
       }
       
+	  	
+	
       $http.post(cacheLocation, {
         headers : {
           'Content-Type' : 'application/x-www-form-urlencoded'
-        }
+        },
+		data: { uri: resource, context-uri: graphUri }
       }).then(function(res) {
         deferred.resolve(res);
         console.log('Caching : url ==>  ' + cacheLocation);
