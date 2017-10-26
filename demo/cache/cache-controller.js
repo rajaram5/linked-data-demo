@@ -1,7 +1,7 @@
 app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Log, HttpEndpoint, File) {    
   $scope.isCachingStarted = false;
   $scope.fairDataPoints = [];
-  $scope.searchEngineUrl=null;
+  $scope.searchEngineUrl = null;
   
   // populate the list with data from the db
   var populateCacheList = function() {
