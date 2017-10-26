@@ -1,4 +1,8 @@
-<!-- Page Content -->
+<!-- 
+The cacheDataOptions() function is initiated as soon as the first user visit the home page, 
+For the every first time this function stores ontologies and RDF blob files which supplies, 
+Data options value to the questions form. 
+-->
 <div class="container" ng-init="cacheDataOptions()">
 	<div class="alert alert-warning" role="alert" ng-if="!isCachingAvailable">
 		<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>

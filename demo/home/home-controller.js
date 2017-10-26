@@ -13,7 +13,13 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, $q, Cac
 	}, function(response) {
 		console.log("Error reading template query file", response);  
 	});
-
+	/*
+	 * This function load data option's value for the questions form. In the current implementation
+	 * ,we get the data option values from ontologies or RDF blob files, this function make
+	 * use of the questions.json file to get the location information(URL) about these files. 
+	 * This function does two things operations, it stores the files in the triple store and also
+	 * checks if given list of file exits in the triple store.
+	 */
 	$scope.cacheDataOptions = function(){
 		console.log("Loading data options");
 		var promises = [];
