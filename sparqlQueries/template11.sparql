@@ -1,0 +1,22 @@
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dummy: <http://rdf.biosemantics.org/ontologies/dummy/>
+PREFIX rdcMeta: <http://rdf.biosemantics.org/ontologies/rd-connect/>
+PREFIX iao: <http://purl.obolibrary.org/obo/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+
+SELECT (COUNT( DISTINCT ?collectionURI) as ?numberOfCollections) ?datasetURI ?dataset {      
+   VALUES(?type) {(<#collection#>)}    
+  {
+    
+      
+    GRAPH ?distributionURI{
+     ?collectionURI a ?type;
+                      dct:title ?collection.
+                      
+     }
+     
+    ?datasetURI dct:title ?dataset;
+                      dcat:distribution ?distributionURI.   
+  }
+}  group by ?datasetURI ?dataset

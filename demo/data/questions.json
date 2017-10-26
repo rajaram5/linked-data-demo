@@ -77,14 +77,30 @@
         "disease"
       ],
       "queryFileName": "template10.sparql"
+    },
+    {
+      "text": "[RIVM] Get data catalog collections",
+      "variables": [
+        "collection"
+      ],
+      "queryFileName": "template11.sparql"
+    },
+    {
+      "text": "[TextBased] Get number of persons with a specific phenotype",
+      "variables": [
+        "plainText"
+      ],
+      "queryFileName": "template12.sparql"
     }
   ],
   "variables": {
     "disease": {
-      "queryFileName": "getDiseases.sparql"
+      "queryFileName": "getDiseases.sparql",
+      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/orphadata2.0.ttl"
     },
     "sampleType": {
-      "queryFileName": "getSampleTypes.sparql"
+      "queryFileName": "getSampleTypes.sparql",
+      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/rdc-ontology.ttl"
     },
     "karyotype": {
       "queryFileName": "getKaryotypes.sparql"
@@ -93,10 +109,15 @@
       "queryFileName": "getBreakpoints.sparql"
     },
     "phenotype": {
-      "queryFileName": "getPhenotypes.sparql"
+      "queryFileName": "getPhenotypes.sparql",
+      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/hpo.ttl"
     },
     "region": {
-      "queryFileName": "getRegions.sparql"
+      "queryFileName": "getRegions.sparql",
+      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/regions.ttl"
+    },
+    "collection": {
+      "queryFileName": "getCollections.sparql"
     }
   }
 }
