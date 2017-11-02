@@ -1,9 +1,35 @@
-app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Log) {    
+app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, HttpEndpoint, Caching, Log) {    
 	$scope.isCachingStarted = false;
-	$scope.fairDataPoints=[{name: "RD connect FDP", 
-		url:"http://localhost:8084/fairdatapoint/fdp"}];
+	$scope.fairDataPoints = [];
 	$scope.searchEngineUrl = null;
 	$scope.oneAtATime = true;
+
+  // populate the list with data from the db
+  var populateCacheList = function() {
+    File.read('data/query/listCachedFdps.sparql').then(function(query) {
+      HttpEndpoint.query(query).then(function(response) {
+        response.data.results.bindings.forEach(function(binding) {
+          $scope.fairDataPoints.push({
+            url: binding.fdp.value,
+            name: binding.name.value
+          });
+        });
+        return $scope.fairDataPoints;
+      }).then(function(fdps) {
+        // if no data was cached, add a default FDP
+        if (fdps.length == 0) {
+          $scope.fairDataPoints = [{
+            name: "RD connect FDP",
+            url:"http://localhost:8084/fairdatapoint/fdp"
+          }];
+        }
+      });
+    });
+  };
+
+  console.log('calling init function');
+  populateCacheList();
+  console.log('init function finished');
 
 	$scope.addFdp = function () {
 		$scope.fairDataPoints.push({ 
@@ -48,5 +74,4 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, Caching, Lo
 			Log.appendToLog("Caching is done");
 		});
 	};
-
 });
