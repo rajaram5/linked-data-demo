@@ -39,6 +39,7 @@ app.service('HttpEndpoint', function ($q, $http, $timeout, GENERAL_CONFIG) {
       });
     },
     load: function (resource, graphUri) {
+
       var deferred = $q.defer();
       var cacheLocation = endpoint;
       var contextUri = resource;
@@ -56,7 +57,7 @@ app.service('HttpEndpoint', function ($q, $http, $timeout, GENERAL_CONFIG) {
       //setting urlenconded form to post
       var data = $.param({
           'uri': graphUri,
-          'content-type': 'application/x-www-form-urlencoded;charset=utf-8;',
+          //'content-type': 'text/turtle', // for future use
           'context-uri': contextUri
       });
 
@@ -64,8 +65,18 @@ app.service('HttpEndpoint', function ($q, $http, $timeout, GENERAL_CONFIG) {
 	deferred.resolve(res);
 	console.log('Caching : url ==>  ' + cacheLocation);
       }, function (res) {
-	console.log('failed to PUT file in endpoint');
-	deferred.reject(res);
+		data = $.param({
+          		'uri': graphUri+".ttl",
+		        'context-uri': contextUri
+      		});
+	$http.post(cacheLocation, data, config).then(function (res){
+		console.log('First attempt to load data failed. Trying differently: ');
+		console.log('Caching now from : ' + graphUri + ".ttl");
+		deferred.resolve(res);
+	}, function (res){
+		console.log('failed to PUT file in endpoint');
+		deferred.reject(res);
+	});
       });
       return deferred.promise;
     }
