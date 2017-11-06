@@ -1,10 +1,4 @@
-app.service('HttpEndpoint', function ($q, $http, $timeout, GENERAL_CONFIG) {
-  //var endpointBaseUrl = 'http://192.168.99.100:8890//';
-
-  //var endpointBaseUrl = 'http://localhost:8079/blazegraph/';
-  //var endpointBaseUrl = 'http://136.243.4.200:8081/blazegraph/';
-  //var endpointBaseUrl = 'http://localhost:8079/blazegraph/';\
-
+app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {  
   var endpointBaseUrl = GENERAL_CONFIG.END_POINT_BASE_URL;
   var endpoint = endpointBaseUrl + 'namespace/test/sparql';
 
@@ -15,7 +9,6 @@ app.service('HttpEndpoint', function ($q, $http, $timeout, GENERAL_CONFIG) {
     var name = urlParser.hostname + urlParser.port + urlLocalName;
     name = name.replace(/\./g, "_");
     return name;
-
   };
 
   return {
