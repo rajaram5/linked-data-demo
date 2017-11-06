@@ -7,7 +7,7 @@ var config_module = angular.module('demonstrator.config', []);
    
   var config_data = {
   'GENERAL_CONFIG': {
-    'END_POINT_BASE_URL': 'http://localhost:8079/blazegraph/'
+    'END_POINT_BASE_URL': 'http://127.0.0.1:9999/blazegraph/'
   }};
 	  
   angular.forEach(config_data,function(key,value) {
