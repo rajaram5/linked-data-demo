@@ -56,7 +56,7 @@ app.service('HttpEndpoint', function ($q, $http, $timeout, GENERAL_CONFIG) {
       //setting urlenconded form to post
       var data = $.param({
           'uri': graphUri,
-	  'content-type': 'application/x-www-form-urlencoded;charset=utf-8;',
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8;',
           'context-uri': contextUri
       });
 
