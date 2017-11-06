@@ -39,16 +39,21 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
 	contextUri = graphUri;
       }
 
+      //setting headers
+      var config = {
+      	  headers : {
+             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+          }
+      };
 
-      $http.post(cacheLocation, {
-	headers: {
-	  'Content-Type': 'application/x-www-form-urlencoded'
-	},
-	data: {
-	  'uri': resource,
-	  'context-uri': contextUri
-	}
-      }).then(function (res) {
+      //setting urlenconded form to post
+      var data = $.param({
+          'uri': graphUri,
+          'content-type': 'application/x-www-form-urlencoded;charset=utf-8;',
+          'context-uri': contextUri
+      });
+
+      $http.post(cacheLocation, data, config).then(function (res) {
 	deferred.resolve(res);
 	console.log('Caching : url ==>  ' + cacheLocation);
       }, function (res) {
