@@ -1,4 +1,4 @@
-app.controller('CacheCtrl', function($scope, $rootScope, $http, FDP, HttpEndpoint, Caching, Log) {    
+app.controller('CacheCtrl', function($scope, $rootScope, $http, File, FDP, HttpEndpoint, Caching, Log) {    
 	$scope.isCachingStarted = false;
 	$scope.fairDataPoints = [];
 	$scope.searchEngineUrl = null;
