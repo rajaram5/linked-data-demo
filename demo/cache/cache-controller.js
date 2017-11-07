@@ -1,4 +1,5 @@
-app.controller('CacheCtrl', function($scope, $rootScope, $http, File, FDP, HttpEndpoint, Caching, Log) {    
+app.controller('CacheCtrl', function($scope, $rootScope, $http, $cookies, File, FDP, HttpEndpoint,
+		Caching, Log) {    
 	$scope.isCachingStarted = false;
 	$scope.fairDataPoints = [];
 	$scope.searchEngineUrl = null;
@@ -9,9 +10,15 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, File, FDP, HttpE
     File.read('data/query/listCachedFdps.sparql').then(function(query) {
       HttpEndpoint.query(query).then(function(response) {
         response.data.results.bindings.forEach(function(binding) {
+        	var fdpFromCookies = $cookies.getObject(btoa(binding.fdp.value));
+        	var state = true;
+        	if (fdpFromCookies != null) {
+        		state = fdpFromCookies.state;
+        	}
           $scope.fairDataPoints.push({
             url: binding.fdp.value,
-            name: binding.name.value
+            name: binding.name.value,
+            state: state 
           });
         });
         return $scope.fairDataPoints;
@@ -20,7 +27,8 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, File, FDP, HttpE
         if (fdps.length == 0) {
           $scope.fairDataPoints = [{
             name: "RD connect FDP",
-            url:"http://localhost:8084/fairdatapoint/fdp"
+            url:"http://localhost:8084/fairdatapoint/fdp",
+            state:true
           }];
         }
       });
@@ -37,9 +45,8 @@ app.controller('CacheCtrl', function($scope, $rootScope, $http, File, FDP, HttpE
 		});
 	};
 
-	$scope.removeFdp = function(fdp) { 
-		var index = $scope.fairDataPoints.indexOf(fdp);
-		$scope.fairDataPoints.splice(index, 1);     
+	$scope.setFdpState = function(fdp) { 
+		$cookies.putObject(btoa(fdp.url), fdp);   
 	};
 
 	$scope.cache = function() {

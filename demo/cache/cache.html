@@ -9,23 +9,20 @@
 		<div class="form-group row" ng-repeat="fdp in fairDataPoints">
 			<div class="col-lg-4">
 				<div class="input-group">
-					<span class="input-group-addon">String</span> <input type="text"
-						class="form-control" placeholder="Enter FDP name"
-						ng-model="fdp.name">
+					<span class="input-group-addon">String</span> 
+					<input type="text" class="form-control" placeholder="Enter FDP name"
+						ng-model="fdp.name"/>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<div class="input-group">
-					<span class="input-group-addon">Url</span> <input type="text"
-						class="form-control" placeholder="Enter FDP URL"
-						ng-model="fdp.url">
+					<span class="input-group-addon">Url</span> 
+					<input type="text" class="form-control" placeholder="Enter FDP URL"
+						ng-model="fdp.url"/>
 				</div>
 			</div>
-			<div class="col-lg-2">
-				<div class="input-group">
-					<span ng-click="removeFdp(fdp)"
-						class="glyphicon glyphicon-trash text-danger"></span>
-				</div>
+			<div class="col-lg-2">						
+				<md-switch ng-model="fdp.state" ng-change="setFdpState(fdp)"/>
 			</div>
 		</div>
 		<!-- Add FDP section -->
