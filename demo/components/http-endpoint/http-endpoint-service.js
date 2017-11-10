@@ -7,21 +7,15 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
      * params is expected in the following format: { 'param_name':'uri'}
      */
     
-    query : function(q, params) {              
-      if (params) {                
-        Object.keys(params).forEach(function(key) {                  
-          q = q.replace(key, params[key]);                
-        });              
-      }      
+    query : function(q, params) {
+      if (params) {
+        Object.keys(params).forEach(function(key) {
+          q = q.replace(key, params[key]);
+          });
+        }
       return $http.get(endpoint, {
-        params : {                  
-          query : q,                  
-          format : 'json',                  
-          callback : 'JSON_CALLBACK'                
-        }              
-      });
-            
-    },
+        params : {query : q, format : 'json', callback : 'JSON_CALLBACK'}});
+      },
             
     load : function(resource, graphUri) {
       var deferred = $q.defer();              

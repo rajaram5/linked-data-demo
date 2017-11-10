@@ -1,5 +1,4 @@
-app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $rootScope, 
-		$cookies) {
+app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $rootScope, $cookies) {
   /**
    * Caches the content of the url using {@link HttpEndpoint#load}, reads the query
    * file using {@link File}, and executes the query using {@link HttpEndpoint#query}.
@@ -11,21 +10,19 @@ app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $ro
     return HttpEndpoint.load(url, graphUri).then(function () {
       Log.appendToLog("Loading content of <" + url + ">");
       return File.read(queryFile).then(function (query) {
-	return HttpEndpoint.query(query, {
-	  '#inputUrl#': url
-	}).then(function (response) {
-	  // return map of id->url
-	  var values = {};
-	  response.data.results.bindings.forEach(function (binding) {
-	    values[binding.id.value] = binding.url.value;
-	  });
-	  return values;
-	}, function (response) {
-	  console.log('failed', response);
-	});
+        return HttpEndpoint.query(query, {'#inputUrl#': url}).then(function (response) {
+          // return map of id->url
+          var values = {};
+          response.data.results.bindings.forEach(function (binding) {
+            values[binding.id.value] = binding.url.value;
+            });
+          return values;
+          }, function (response) {
+            console.log('failed', response);
+            });
+        });
       });
-    });
-  };
+    };
 
   return {
     /**
@@ -116,26 +113,23 @@ app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $ro
 	});
       });
     },  
+    
     getFdps: function() {
-    	return File.read('data/query/listCachedFdps.sparql').then(function(query) {
-    		return HttpEndpoint.query(query).then(function(response) {
-    			var fairDataPoints = [];    			
-    			response.data.results.bindings.forEach(function(binding) {
-    				var fdpFromCookies = $cookies.getObject(btoa(binding.fdp.value));
-    				var state = true;
-    				if (fdpFromCookies != null) {
-    					state = fdpFromCookies.state;
-    				}
-    				fairDataPoints.push({
-    					url: binding.fdp.value,
-    					name: binding.name.value,
-    					state: state 
+      return File.read('data/query/listCachedFdps.sparql').then(function(query) {
+        return HttpEndpoint.query(query).then(function(response) {
+          var fairDataPoints = [];
+          response.data.results.bindings.forEach(function(binding) {
+            var fdpFromCookies = $cookies.getObject(btoa(binding.fdp.value));
+            var state = true;
+            if(fdpFromCookies != null) {
+              state = fdpFromCookies.state;
+            }
+    				fairDataPoints.push({url:binding.fdp.value, name:binding.name.value, state:state});
     				});
-    			});
-    			
-    			return fairDataPoints;
+          return fairDataPoints;
 	      });
-	    });	 
+	    });	      
   	}
+    
   };
 });
