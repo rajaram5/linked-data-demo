@@ -1,9 +1,8 @@
-app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, $q, Caching, FDP,
+app.controller('HomeCtrl', function($scope, $cookies, Data, File, $timeout, $http, $q, Caching, FDP,
 		HttpEndpoint, $rootScope, GENERAL_CONFIG) {
 	$scope.isCachingAvailable = Caching.getCachingState();  
 	$scope.variables = {};
 	$scope.isResultAvailable = false;
-	//$scope.vars = {};
 
 	File.read(GENERAL_CONFIG.QUESTIONS_FILE).then(function(response) {
 		$scope.questions = response.templateQueries;
@@ -13,7 +12,7 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, $q, Cac
 	}, function(response) {
 		console.log("Error reading template query file", response);  
 	});
-	/*
+	/*return promise from then
 	 * This function load data option's value for the questions form. In the current implementation
 	 * ,we get the data option values from ontologies or RDF blob files, this function make
 	 * use of the questions.json file to get the location information(URL) about these files. 
@@ -101,6 +100,12 @@ app.controller('HomeCtrl', function($scope, Data, File, $timeout, $http, $q, Cac
 			question.variables.forEach(function(variable) {
 				variables['#'+variable+'#'] = $scope.variables[variable];
 			});
+			// Add variables['#' + FDP_Variable + '#'] here. Make use of getfdpList function
+			var fdpUris = "";
+			$cookies.getObject("fdpsToUse").forEach(function(fdp){			  
+			  fdpUris = fdpUris.concat(" <", fdp, ">");			  
+			});
+			variables['#fdp#'] = fdpUris;
 			HttpEndpoint.query(query, variables).then(function(response) {
 				console.log(response);        
 				$scope.results = response.data;        

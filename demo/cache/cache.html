@@ -1,36 +1,22 @@
-<uib-accordion close-others="oneAtATime"> <!-- FDP caching config -->
+<uib-accordion close-others="oneAtATime">
+
+<!-- FDP caching config panel -->
 <div uib-accordion-group class="panel-info" is-open="fdpCache.open">
 	<uib-accordion-heading> <span
 		class="glyphicon glyphicon-cog"></span> FDP cache configuration <i
 		class="pull-right glyphicon"
-		ng-class="{'glyphicon-chevron-down': fdpCache.open, 'glyphicon-chevron-right': !fdpCache.open}"></i>
+		ng-class="{'glyphicon-chevron-down': fdpCache.open, 'glyphicon-chevron-right':
+		!fdpCache.open}"></i>
 	</uib-accordion-heading>
 	<form>
-		<div class="form-group row" ng-repeat="fdp in fairDataPoints">
-			<div class="col-lg-4">
-				<div class="input-group">
-					<span class="input-group-addon">String</span> <input type="text"
-						class="form-control" placeholder="Enter FDP name"
-						ng-model="fdp.name">
-				</div>
-			</div>
+		<div class="form-group row">
 			<div class="col-lg-6">
 				<div class="input-group">
 					<span class="input-group-addon">Url</span> <input type="text"
 						class="form-control" placeholder="Enter FDP URL"
-						ng-model="fdp.url">
+						ng-model="fdp.url" />
 				</div>
 			</div>
-			<div class="col-lg-2">
-				<div class="input-group">
-					<span ng-click="removeFdp(fdp)"
-						class="glyphicon glyphicon-trash text-danger"></span>
-				</div>
-			</div>
-		</div>
-		<!-- Add FDP section -->
-		<div class="form-group row">
-			<a href="" ng-click="addFdp()" class="btn" role="button">Add new FDP</a>
 		</div>
 		<!-- Cache button section  -->
 		<div class="form-group row">
@@ -43,13 +29,13 @@
 	</form>
 </div>
 
-
-<!-- Search caching config -->
+<!-- Search caching config panel -->
 <div uib-accordion-group class="panel-info" is-open="searchCache.open">
 	<uib-accordion-heading> <span
 		class="glyphicon glyphicon-cog"></span> FDP from search cache
 	configuration <i class="pull-right glyphicon"
-		ng-class="{'glyphicon-chevron-down': searchCache.open, 'glyphicon-chevron-right': !searchCache.open}"></i>
+		ng-class="{'glyphicon-chevron-down': searchCache.open, 'glyphicon-chevron-right':
+		!searchCache.open}"></i>
 	</uib-accordion-heading>
 	<form>
 		<div class="form-group row">
@@ -71,9 +57,38 @@
 		</div>
 	</form>
 </div>
+
+<!-- FDP config panel -->
+<div uib-accordion-group class="panel-info" is-open="fdpConfig.open"
+	ng-click="updateFdpList()">
+	<uib-accordion-heading> <span
+		class="glyphicon glyphicon-cog"></span> FDP query configuration <i
+		class="pull-right glyphicon"
+		ng-class="{'glyphicon-chevron-down': fdpConfig.open, 'glyphicon-chevron-right':
+		!fdpConfig.open}"></i>
+	</uib-accordion-heading>
+	<div class="form-group row" ng-repeat="fdp in fairDataPoints">
+		<div class="col-lg-4">
+			<div class="input-group">
+				<span class="input-group-addon">String</span> <input type="text"
+					class="form-control" placeholder="Enter FDP name"
+					ng-model="fdp.name" />
+			</div>
+		</div>
+		<div class="col-lg-6">
+			<div class="input-group">
+				<span class="input-group-addon">Url</span> <input type="text"
+					class="form-control" placeholder="Enter FDP URL" ng-model="fdp.url" />
+			</div>
+		</div>
+		<div class="col-lg-2">
+			<md-switch ng-model="fdp.state" ng-change="setFdpState(fdp)" />
+		</div>
+	</div>
+</div>
 </uib-accordion>
 
-
+<!-- Cache log panel -->
 <div class="panel panel-info" ng-if="isCachingStarted">
 	<div class="panel-heading">
 		<span class="glyphicon glyphicon-info-sign"></span> Log
