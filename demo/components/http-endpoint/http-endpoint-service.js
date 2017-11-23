@@ -1,6 +1,6 @@
 app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
   var endpointBaseUrl = GENERAL_CONFIG.END_POINT_BASE_URL;
-  var endpoint = endpointBaseUrl + 'namespace/kb/sparql';
+  var endpoint = endpointBaseUrl + 'namespace/test/sparql';
   
   return {            
     /**
