@@ -7,7 +7,7 @@ var config_module = angular.module('demonstrator.config', []);
    
   var config_data = {
   'GENERAL_CONFIG': {
-    'END_POINT_BASE_URL': 'http://localhost:8079/blazegraph/',
+    'END_POINT_BASE_URL': 'http://localhost:8080/blazegraph/',
     'QUESTIONS_FILE': 'data/questions.json',
     'SPARQL_QUERIES_DIR': 'data/query/'
   }};
