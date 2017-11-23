@@ -8,7 +8,7 @@
       "queryFileName": "template1.sparql"
     },
     {
-      "text": "[W] Get number of persons with a specific phenotype",
+      "text": "[W-with-FDP] Get number of persons with a specific phenotype",
       "variables": [
         "phenotype"
       ],

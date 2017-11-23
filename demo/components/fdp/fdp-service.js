@@ -1,4 +1,4 @@
-app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $rootScope) {
+app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $rootScope, $cookies) {
   /**
    * Caches the content of the url using {@link HttpEndpoint#load}, reads the query
    * file using {@link File}, and executes the query using {@link HttpEndpoint#query}.
@@ -10,21 +10,19 @@ app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $ro
     return HttpEndpoint.load(url, graphUri).then(function () {
       Log.appendToLog("Loading content of <" + url + ">");
       return File.read(queryFile).then(function (query) {
-	return HttpEndpoint.query(query, {
-	  '#inputUrl#': url
-	}).then(function (response) {
-	  // return map of id->url
-	  var values = {};
-	  response.data.results.bindings.forEach(function (binding) {
-	    values[binding.id.value] = binding.url.value;
-	  });
-	  return values;
-	}, function (response) {
-	  console.log('failed', response);
-	});
+        return HttpEndpoint.query(query, {'#inputUrl#': url}).then(function (response) {
+          // return map of id->url
+          var values = {};
+          response.data.results.bindings.forEach(function (binding) {
+            values[binding.id.value] = binding.url.value;
+            });
+          return values;
+          }, function (response) {
+            console.log('failed', response);
+            });
+        });
       });
-    });
-  };
+    };
 
   return {
     /**
@@ -42,7 +40,8 @@ app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $ro
 	var logMsg = "Loading data from '" + fdp.name;
 	Log.appendToLog(logMsg);
 	// load the FDP root and query for all catalogs
-	var uberpromise = cacheAndQuery(fdp.url, fdp.url, 'data/query/getCatalogs.sparql').then(function (catalogs) {
+	var uberpromise = cacheAndQuery(fdp.url, fdp.url, 'data/query/getCatalogs.sparql').then(
+	    function (catalogs) {
 	  console.log("catalogs for ", fdp.name, " FDP ", catalogs);
 	  catalogsCount = catalogsCount + Object.keys(catalogs).length;
 	  Statistics.setCatalogsCount(catalogsCount);
@@ -50,14 +49,16 @@ app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $ro
 	  Object.keys(catalogs).forEach(function (cid) {
 	    var catalog = catalogs[cid];
 	    // load the catalog and query for all datasets
-	    p.push(cacheAndQuery(catalog, fdp.url, 'data/query/getDataset.sparql').then(function (datasets) {
+	    p.push(cacheAndQuery(catalog, fdp.url, 'data/query/getDataset.sparql').then(
+	        function (datasets) {
 	      var p2 = [];
 	      Object.keys(datasets).forEach(function (did) {
 		var dataset = datasets[did];
 		datasetsCount = datasetsCount + 1;
 		Statistics.setDataSetsCount(datasetsCount);
 		// load the dataset and query for all distributions
-		p2.push(cacheAndQuery(dataset, fdp.url, 'data/query/getDistributions.sparql').then(function (distributions) {
+		p2.push(cacheAndQuery(dataset, fdp.url, 'data/query/getDistributions.sparql').then(
+		    function (distributions) {
 		  var p3 = [];
 		  Object.keys(distributions).forEach(function (distId) {
 		    var dist = distributions[distId];
@@ -111,6 +112,24 @@ app.service('FDP', function ($http, HttpEndpoint, File, Statistics, Log, $q, $ro
 	  console.log('failed uberloop');
 	});
       });
-    }
+    },  
+    
+    getFdps: function() {
+      return File.read('data/query/listCachedFdps.sparql').then(function(query) {
+        return HttpEndpoint.query(query).then(function(response) {
+          var fairDataPoints = [];
+          response.data.results.bindings.forEach(function(binding) {
+            var fdpFromCookies = $cookies.getObject(btoa(binding.fdp.value));
+            var state = true;
+            if(fdpFromCookies != null) {
+              state = fdpFromCookies.state;
+            }
+    				fairDataPoints.push({url:binding.fdp.value, name:binding.name.value, state:state});
+    				});
+          return fairDataPoints;
+	      });
+	    });	      
+  	}
+    
   };
 });
