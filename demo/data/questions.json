@@ -1,13 +1,6 @@
 {
   "templateQueries": [
     {
-      "text": "[W] Get number of biosamples from donors with a specific phenotype",
-      "variables": [
-        "phenotype"
-      ],
-      "queryFileName": "template1.sparql"
-    },
-    {
       "text": "[W-with-FDP] Get number of persons with a specific phenotype",
       "variables": [
         "phenotype"
@@ -36,88 +29,24 @@
         "sampleType"
       ],
       "queryFileName": "template9.sparql"
-    },
-    {
-      "text": "Get biosamples from donors with a specific disease and a specific karyotype",
-      "variables": [
-        "disease",
-        "karyotype"
-      ],
-      "queryFileName": "template4.sparql"
-    },
-    {
-      "text": "Get biosamples from donors with a specific disease, a specific karyotype and specific sampletypes",
-      "variables": [
-        "disease",
-        "sampleType",
-        "karyotype"
-      ],
-      "queryFileName": "template5.sparql"
-    },
-    {
-      "text": "Get biosamples from donors with a specific disease, a specific karyotype, a specific breakpoint localization and a specific sampletype",
-      "variables": [
-        "disease",
-        "sampleType",
-        "karyotype",
-        "breakpoint"
-      ],
-      "queryFileName": "template6.sparql"
-    },
-    {
-      "text": "Get diseases sharing phenotypes",
-      "variables": [
-        "disease"
-      ],
-      "queryFileName": "template8.sparql"
-    },
-    {
-      "text": "Get biosamples from donors sharing phenotypes",
-      "variables": [
-        "disease"
-      ],
-      "queryFileName": "template10.sparql"
-    },
-    {
-      "text": "[RIVM] Get data catalog collections",
-      "variables": [
-        "collection"
-      ],
-      "queryFileName": "template11.sparql"
-    },
-    {
-      "text": "[TextBased] Get number of persons with a specific phenotype",
-      "variables": [
-        "plainText"
-      ],
-      "queryFileName": "template12.sparql"
     }
   ],
   "variables": {
     "disease": {
       "queryFileName": "getDiseases.sparql",
-      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/orphadata2.0.ttl"
+      "fileUrl": "http://localhost:8503/rdc-demo-dataset/orphadata2.0.ttl"
     },
     "sampleType": {
       "queryFileName": "getSampleTypes.sparql",
-      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/rdc-ontology.ttl"
-    },
-    "karyotype": {
-      "queryFileName": "getKaryotypes.sparql"
-    },
-    "breakpoint": {
-      "queryFileName": "getBreakpoints.sparql"
+      "fileUrl": "http://localhost:8503/rdc-demo-dataset/rdc-ontology.ttl"
     },
     "phenotype": {
       "queryFileName": "getPhenotypes.sparql",
-      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/hpo.ttl"
+      "fileUrl": "http://localhost:8503/rdc-demo-dataset/hpo.ttl"
     },
     "region": {
       "queryFileName": "getRegions.sparql",
-      "fileUrl": "http://semlab1.liacs.nl:8080/rdc-demo-dataset/regions.ttl"
-    },
-    "collection": {
-      "queryFileName": "getCollections.sparql"
+      "fileUrl": "http://localhost:8503/rdc-demo-dataset/regions.ttl"
     }
   }
 }
