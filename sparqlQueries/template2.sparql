@@ -7,7 +7,9 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 
 SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?diseaseURI ?disease ?biobank ?biobankURI ?registry ?registryURI  {
   
- VALUES(?diseaseInput) {(<#disease#>)}   
+ VALUES(?diseaseInput) {(<#disease#>)}  
+ 
+ VALUES ?fdpURI {#fdp#}  
   
     ?diseaseURI  rdfs:subClassOf* ?diseaseInput.
   
@@ -17,11 +19,15 @@ SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?diseaseURI ?disease ?
   GRAPH ?biobankDistributionURI {   
     ?sampleURI rdcMeta:e297332a_00a9_4ed0_b661_00dbd35aff95 ?donorURI. 
   }    
+  #GRAPH ?fdpURI 
   {    
     ?biobankURI dct:title ?biobank;
                       dcat:distribution ?biobankDistributionURI. 
     ?registryURI dct:title ?registry;
-                      dcat:distribution ?registryDistributionURI.    
+                      dcat:distribution ?registryDistributionURI.
+  }
+  {
+        
     ?diseaseURI rdfs:label ?disease.  
   }
 }  group by ?diseaseURI ?disease ?biobank ?biobankURI ?registry ?registryURI

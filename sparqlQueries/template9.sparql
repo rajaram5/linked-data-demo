@@ -9,6 +9,8 @@ SELECT DISTINCT ?sample ?sampleURI ?sampleType ?sampleTypeURI ?biobank ?biobankU
   
  VALUES(?phenotypeInput ?sampleTypeURI) {(<#phenotype#> <#sampleType#>)}  
  
+ VALUES ?fdpURI {#fdp#} 
+ 
  ?phenotypeURI  rdfs:subClassOf* ?phenotypeInput.
  
   GRAPH ?registryDistributionURI {    
@@ -24,11 +26,14 @@ SELECT DISTINCT ?sample ?sampleURI ?sampleType ?sampleTypeURI ?biobank ?biobankU
                     dct:identifier ?sample;	
                     iao:IAO_0000219 ?sampleURI.
   }    
+  #GRAPH ?fdpURI 
   {    
     ?biobankURI dct:title ?biobank;
                       dcat:distribution ?biobankDistributionURI. 
     ?registryURI dct:title ?registry;
                       dcat:distribution ?registryDistributionURI. 
+  }
+  {
     ?sampleTypeURI rdfs:label ?sampleType.    
     ?diseaseURI rdfs:label ?disease.  
   }

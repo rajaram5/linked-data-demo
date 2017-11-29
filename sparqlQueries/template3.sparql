@@ -8,7 +8,9 @@ PREFIX dcat: <http://www.w3.org/ns/dcat#>
 
 SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenotype ?diseaseURI ?disease ?biobank ?biobankURI ?registry ?registryURI ?region ?regionURI {
      
- VALUES(?phenotypeInput ?regionURI) {(<#phenotype#> <#region#>)}   
+ VALUES(?phenotypeInput ?regionURI) {(<#phenotype#> <#region#>)}  
+ 
+ VALUES ?fdpURI {#fdp#}  
   
     ?phenotypeURI  rdfs:subClassOf* ?phenotypeInput.
    
@@ -20,11 +22,14 @@ SELECT (COUNT( DISTINCT ?sampleURI) as ?numberOfSamples)  ?phenotypeURI ?phenoty
   GRAPH ?biobankDistributionURI {    
     ?sampleURI rdcMeta:e297332a_00a9_4ed0_b661_00dbd35aff95 ?donorURI.
   }    
+  #GRAPH ?fdpURI 
   {    
     ?biobankURI dct:title ?biobank;
                       dcat:distribution ?biobankDistributionURI. 
     ?registryURI dct:title ?registry;
                       dcat:distribution ?registryDistributionURI. 
+  }
+  {
     ?diseaseURI rdfs:label ?disease.  
     ?phenotypeURI rdfs:label ?phenotype.
     {
