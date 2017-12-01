@@ -5,8 +5,9 @@ PREFIX iao: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 
-SELECT (COUNT( DISTINCT ?collectionURI) as ?numberOfCollections) ?datasetURI ?dataset {      
+SELECT (COUNT( DISTINCT ?collectionURI) as ?numberOfCollections) ?datasetURI ?dataset ?fdpURI ?fdp {      
    VALUES(?type) {(<#collection#>)}    
+   VALUES ?fdpURI {#fdp#}   
   {
     
       
@@ -16,7 +17,11 @@ SELECT (COUNT( DISTINCT ?collectionURI) as ?numberOfCollections) ?datasetURI ?da
                       
      }
      
-    ?datasetURI dct:title ?dataset;
+    GRAPH ?fdpURI {
+      ?datasetURI dct:title ?dataset;
                       dcat:distribution ?distributionURI.   
+    }
+          
+    ?fdpURI dct:title ?fdp.  
   }
-}  group by ?datasetURI ?dataset
+}  group by ?datasetURI ?dataset ?fdpURI ?fdp

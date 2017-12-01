@@ -5,9 +5,10 @@ PREFIX iao: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 
-SELECT DISTINCT ?collectionURI ?collection ?datasetURI ?dataset {      
-   VALUES(?textInput) {("#plainText#")}    
-  
+SELECT DISTINCT ?collectionURI ?collection ?datasetURI ?dataset ?fdpURI ?fdp {      
+   VALUES(?textInput) {("#plainText#")}  
+   VALUES ?fdpURI {#fdp#}  
+    
     
       
     GRAPH ?distributionURI{
@@ -18,7 +19,11 @@ SELECT DISTINCT ?collectionURI ?collection ?datasetURI ?dataset {
      
      FILTER regex(str(?collection), ?textInput, "i") .
      
-    ?datasetURI dct:title ?dataset;
+    GRAPH ?fdpURI {
+      ?datasetURI dct:title ?dataset;
                       dcat:distribution ?distributionURI.   
+    }
+          
+    ?fdpURI dct:title ?fdp.    
   
 }
