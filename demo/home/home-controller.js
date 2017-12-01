@@ -117,7 +117,7 @@ app.controller('HomeCtrl', function($scope, $cookies, Data, File, $timeout, $htt
 				$timeout(function(){
 					console.log('trying to enable pagination');
 					jQuery('#footest').simplePagination({
-						perPage: 10,
+						perPage: 15,
 						previousButtonText: 'Prev',
 						nextButtonText: 'Next',
 						previousButtonClass: "btn btn-primary btn-xs",        

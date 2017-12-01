@@ -4,21 +4,29 @@ PREFIX rdcMeta: <http://rdf.biosemantics.org/ontologies/rd-connect/>
 PREFIX iao: <http://purl.obolibrary.org/obo/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-SELECT DISTINCT ?collectionURI ?collection ?datasetURI ?dataset {      
-   VALUES(?textInput) {("#plainText#")}    
+SELECT DISTINCT ?collection ?collectionURI  ?datasetURI ?dataset {   
+  VALUES(?type) {(<#collection#>)}  
+  
+  {
+    ?collectionURI skos:exactMatch ?uri1.
+  }
+  UNION
+  {
+    ?uri2 skos:exactMatch ?collectionURI.
+  }
+  
   
     
       
     GRAPH ?distributionURI{
-     ?collectionURI a <http://semanticscience.org/resource/SIO_000616>;
+     ?collectionURI a ?type;
                       dct:title ?collection.
                       
      }
      
-     FILTER regex(str(?collection), ?textInput, "i") .
-     
     ?datasetURI dct:title ?dataset;
                       dcat:distribution ?distributionURI.   
   
-}
+} GROUP BY ?collection ?collectionURI  ?datasetURI ?dataset

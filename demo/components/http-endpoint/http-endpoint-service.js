@@ -24,7 +24,12 @@ app.service('HttpEndpoint', function($q, $http, $timeout, GENERAL_CONFIG) {
       
       if (graphUri) {                
         contextUri = graphUri;              
-      }             
+      } 
+      // Hack solution for molegenis fdp
+      if (resource == 'https://molgenis26.gcc.rug.nl/downloads/bbmri/sample_collections.ttl' || 
+          resource == 'http://molgenis26.gcc.rug.nl/downloads/bbmri/sample_collections.ttl') {
+        resource = 'http://localhost:8503/demo-content/sample_collections.ttl';
+      }
       // setting headers              
       var config = {headers :{'Content-Type' : 'application/x-www-form-urlencoded;charset=utf-8;'}};
       

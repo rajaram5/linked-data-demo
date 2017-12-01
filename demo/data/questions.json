@@ -1,52 +1,31 @@
 {
-  "templateQueries": [
+  "templateQueries": [    
     {
-      "text": "[W-with-FDP] Get number of persons with a specific phenotype",
+      "text": "LIST number of collections per data provider",
       "variables": [
-        "phenotype"
+        "collection"
       ],
-      "queryFileName": "template7.sparql"
+      "queryFileName": "template11.sparql"
     },
     {
-      "text": "[W] Get number of biosamples from donors with a specific disease",
+      "text": "GET collection entries matches given textual description",
       "variables": [
-        "disease"
+        "plainText"
       ],
-      "queryFileName": "template2.sparql"
+      "queryFileName": "template12.sparql"
     },
     {
-      "text": "[W] Get number of biosamples from donors with a specific phenotype and from a specific region",
+      "text": "GET number of overlapping collections between data provider",
       "variables": [
-        "phenotype",
-        "region"
+        "collection"
       ],
-      "queryFileName": "template3.sparql"
-    },
-    {
-      "text": "[W] Get biosamples from donors with a specific phenotype and specific sampletypes",
-      "variables": [
-        "phenotype",
-        "sampleType"
-      ],
-      "queryFileName": "template9.sparql"
+      "queryFileName": "template13.sparql"
     }
   ],
-  "variables": {
-    "disease": {
-      "queryFileName": "getDiseases.sparql",
-      "fileUrl": "http://localhost:8503/rdc-demo-dataset/orphadata2.0.ttl"
-    },
-    "sampleType": {
-      "queryFileName": "getSampleTypes.sparql",
-      "fileUrl": "http://localhost:8503/rdc-demo-dataset/rdc-ontology.ttl"
-    },
-    "phenotype": {
-      "queryFileName": "getPhenotypes.sparql",
-      "fileUrl": "http://localhost:8503/rdc-demo-dataset/hpo.ttl"
-    },
-    "region": {
-      "queryFileName": "getRegions.sparql",
-      "fileUrl": "http://localhost:8503/rdc-demo-dataset/regions.ttl"
+  "variables": {   
+    "collection": {
+      "queryFileName": "getCollections.sparql",
+      "fileUrl": "http://localhost:8503/demo-content/labels.ttl"
     }
   }
 }
